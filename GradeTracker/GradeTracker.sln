@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeTracker", "GradeTracker\GradeTracker.csproj", "{BE1CCA87-81DC-4B04-806E-7FE7B1C6271D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeTrackerUnitTests", "GradeTrackerUnitTests\GradeTrackerUnitTests.csproj", "{56D3422A-5595-4FED-848F-539132F6BB68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeTrackerWebAPI", "GradeTrackerWebAPI\GradeTrackerWebAPI.csproj", "{E9B6316E-6DAC-42F2-845A-F9D57925DBAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{56D3422A-5595-4FED-848F-539132F6BB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56D3422A-5595-4FED-848F-539132F6BB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56D3422A-5595-4FED-848F-539132F6BB68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B6316E-6DAC-42F2-845A-F9D57925DBAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B6316E-6DAC-42F2-845A-F9D57925DBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B6316E-6DAC-42F2-845A-F9D57925DBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B6316E-6DAC-42F2-845A-F9D57925DBAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
