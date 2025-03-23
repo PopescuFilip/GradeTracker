@@ -8,7 +8,7 @@ namespace GradeTrackerWebAPI.Models
     {
         // Navigation properties
 
-        public int ClassId { get; set; } // Foreign key reference to Class
+        public int ClassId { get; set; } 
         [JsonIgnore]
         public ClassEntity Class { get; set; } = null!;
     }
