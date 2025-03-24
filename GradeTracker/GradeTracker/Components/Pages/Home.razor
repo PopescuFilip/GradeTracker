@@ -5,3 +5,17 @@
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<AuthorizeView>
+	<NotAuthorized>
+		<span>
+			You are not logged in. Please <a href="/login">click here</a> to login
+		</span>
+	</NotAuthorized>
+	<Authorized>
+		<span>
+			You are logged in as <b>@context.User.Identity.Name</b>.
+			<a href="/logout">Click here</a> to logout
+		</span>
+	</Authorized>
+</AuthorizeView>

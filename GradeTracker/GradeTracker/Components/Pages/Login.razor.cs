@@ -25,14 +25,6 @@ public partial class Login
     {
         var username = Model.Username;
         var password = Model.Password;
-        //var userId = await UserService.Check(username, password);
-        var userId = "Guid.NewGuid()";
-
-        if (!Guid.TryParse(userId, out _))
-        {
-            InvalidUsernameOrPassword = true;
-            return;
-        }
 
         await SignIn(username);
 
@@ -44,7 +36,7 @@ public partial class Login
         var claims = new List<Claim>
         {
             new(ClaimTypes.Name, username),
-            new(ClaimTypes.Role, "user")
+            new(ClaimTypes.Role, "student")
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
