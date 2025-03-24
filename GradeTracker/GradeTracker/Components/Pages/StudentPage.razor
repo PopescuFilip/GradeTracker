@@ -1,6 +1,6 @@
 ﻿@page "/student"
 @rendermode InteractiveServer
-@attribute [Authorize]
+@attribute [Authorize(Roles = Roles.Student)]
 
 <PageTitle>Student page</PageTitle>
 

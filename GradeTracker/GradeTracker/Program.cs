@@ -1,4 +1,6 @@
 using GradeTracker.Components;
+using GradeTracker.Services;
+using GradeTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,10 +15,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.Name = "auth-token";
         options.Cookie.MaxAge = TimeSpan.FromMinutes(30);
         options.LoginPath = "/login";
-        options.AccessDeniedPath = "/acces-denied";
+        options.AccessDeniedPath = "/access-denied";
     });
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddScoped<IUserService, MockUserService>();
+
+builder.Services.AddDistributedMemoryCache();
 
 var app = builder.Build();
 

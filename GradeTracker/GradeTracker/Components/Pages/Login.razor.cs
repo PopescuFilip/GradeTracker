@@ -1,3 +1,5 @@
+using GradeTracker.Enums;
+using GradeTracker.Services.Interfaces;
 using GradeTracker.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,6 +13,8 @@ public partial class Login
     [CascadingParameter]
     public HttpContext HttpContext { get; set; }
 
+    [Inject]
+    public IUserService UserService { get; set; }
 
 
     [Inject]
@@ -26,17 +30,27 @@ public partial class Login
         var username = Model.Username;
         var password = Model.Password;
 
-        await SignIn(username);
+        var userType = await UserService.Login(username, password);
+
+        if (userType == UserType.None)
+        {
+            InvalidUsernameOrPassword = true;
+            return;
+        }
+
+        var role = userType == UserType.Student ? Roles.Student : Roles.Teacher;
+
+        await SignIn(username, role);
 
         Console.WriteLine("succesful login");
     }
 
-    private async Task SignIn(string username)
+    private async Task SignIn(string username, string role)
     {
         var claims = new List<Claim>
         {
             new(ClaimTypes.Name, username),
-            new(ClaimTypes.Role, "student")
+            new(ClaimTypes.Role, role)
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
