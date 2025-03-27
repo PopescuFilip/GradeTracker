@@ -10,14 +10,10 @@ public class EntityService<T>(GradeTrackerContext context) : IEntityService<T> w
     protected readonly GradeTrackerContext _context = context;
 
     public virtual async Task<List<T>> GetAll(bool includeAllProperties = false)
-    {
-        return await _context.Set<T>().ToListAsync();
-    }
+        => await _context.Set<T>().ToListAsync();
 
     public virtual async Task<T?> Get(int id)
-    {
-        return await _context.Set<T>().FindAsync(id);
-    }
+        => await _context.Set<T>().FindAsync(id);
 
     public virtual async Task<bool> Create(T model)
     {
