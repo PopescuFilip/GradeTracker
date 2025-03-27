@@ -5,8 +5,8 @@ namespace GradeTrackerWebAPI.Helpers;
 
 public static class QueryExtensions
 {
-    public static IQueryable<ClassEntity> IncludeAll(this IQueryable<ClassEntity> query)
+    public static IQueryable<SubjectEntity> IncludeAll(this IQueryable<SubjectEntity> query)
         => query
             .Include(c => c.Students)
-            .Include(c => c.Subjects);
+            .Include(c => c.Assignments);
 }

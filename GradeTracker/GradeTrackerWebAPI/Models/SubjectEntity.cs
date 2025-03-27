@@ -14,7 +14,7 @@ namespace GradeTrackerWebAPI.Models
         public ICollection<AssignmentEntity> Assignments { get; set; } = new List<AssignmentEntity>();
 
         [JsonIgnore]
-        public ICollection<ClassEntity> Classes { get; set; } = new List<ClassEntity>();
+        public ICollection<StudentEntity> Students { get; set; } = new List<StudentEntity>();
 
         [JsonIgnore]
         public virtual TeacherEntity Teacher { get; set; } = null!;

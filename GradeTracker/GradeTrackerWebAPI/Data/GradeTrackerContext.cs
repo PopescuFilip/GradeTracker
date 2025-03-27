@@ -6,7 +6,6 @@ namespace GradeTrackerWebAPI.Data
     public class GradeTrackerContext(DbContextOptions<GradeTrackerContext> options) : DbContext(options)
     {
         public DbSet<UserEntity> Users { get; set; }
-        public DbSet<ClassEntity> Classes { get; set; }
         public DbSet<StudentEntity> Students { get; set; }
         public DbSet<AssignmentEntity> Assignments { get; set; }
         public DbSet<SubjectEntity> Subjects { get; set; }
@@ -15,25 +14,25 @@ namespace GradeTrackerWebAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StudentEntity>()
-                .HasOne(s => s.Class)
-                .WithMany(c => c.Students)
-                .HasForeignKey(s => s.ClassId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(s => s.Subjects)
+                .WithMany(s => s.Students);
 
-            modelBuilder.Entity<ClassEntity>()
-                .HasMany(c => c.Students)
-                .WithOne(cl => cl.Class)
-                .HasForeignKey(cl => cl.ClassId)
+            modelBuilder.Entity<StudentEntity>()
+                .HasMany(s => s.Grades)
+                .WithOne(g => g.Student)
+                .HasForeignKey(g => g.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<ClassEntity>()
-                .HasMany(c => c.Subjects)
-                .WithMany(s => s.Classes);
 
             modelBuilder.Entity<AssignmentEntity>()
                 .HasOne(a => a.Subject)
                 .WithMany(s => s.Assignments)
                 .HasForeignKey(a => a.SubjectId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AssignmentEntity>()
+                .HasMany(a => a.Grades)
+                .WithOne(g => g.Assignment)
+                .HasForeignKey(g => g.AssignmentId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SubjectEntity>()

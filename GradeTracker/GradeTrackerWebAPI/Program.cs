@@ -15,8 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IEntityService<TeacherEntity>, EntityService<TeacherEntity>>();
 builder.Services.AddScoped<IEntityService<StudentEntity>, EntityService<StudentEntity>>();
-builder.Services.AddScoped<IEntityService<ClassEntity>, ClassService>();
-builder.Services.AddScoped<IEntityService<SubjectEntity>, EntityService<SubjectEntity>>();
+builder.Services.AddScoped<IEntityService<SubjectEntity>, SubjectService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDbContext<GradeTrackerContext>(options =>
@@ -46,20 +45,12 @@ app.Run();
 
 static async Task PopulateDb(IServiceScope scope)
 {
-    var classService = scope.ServiceProvider.GetRequiredService<IEntityService<ClassEntity>>();
-    var classes = await classService.GetAll();
-    if (classes == null || classes.Count == 0)
-    {
-        await classService.Create(new ClassEntity() { Name = "3C"});
-    }
-
     var subjectService = scope.ServiceProvider.GetRequiredService<IEntityService<SubjectEntity>>();
     var subjects = await subjectService.GetAll();
     if (subjects == null || subjects.Count == 0)
     {
-        var luckyClass = (await classService.GetAll()).First();
-        await subjectService.Create(new SubjectEntity() { Name = "Math", Classes = { luckyClass } });
-        await subjectService.Create(new SubjectEntity() { Name =  "English", Classes = { luckyClass } });
+        await subjectService.Create(new SubjectEntity() { Name = "Math" });
+        await subjectService.Create(new SubjectEntity() { Name =  "English" });
     }
 
     var teacherService = scope.ServiceProvider.GetRequiredService<IEntityService<TeacherEntity>>();
@@ -90,14 +81,32 @@ static async Task PopulateDb(IServiceScope scope)
     var students = await studentService.GetAll();
     if (students == null || students.Count == 0)
     {
-        var newStudent = new StudentEntity()
+        var newStudent1 = new StudentEntity()
         {
             FirstName = "John",
             LastName = "Maical",
             Username = "student",
             Password = "pass",
-            Class = (await classService.GetAll()).First()
+            Subjects = await subjectService.GetAll()
         };
-        await studentService.Create(newStudent);
+        var newStudent2 = new StudentEntity()
+        {
+            FirstName = "Alex",
+            LastName = "Butcher",
+            Username = "alex",
+            Password = "pass",
+            Subjects = await subjectService.GetAll()
+        };
+        var newStudent3 = new StudentEntity()
+        {
+            FirstName = "Chad",
+            LastName = "Chad",
+            Username = "chad",
+            Password = "pass",
+            Subjects = { (await subjectService.GetAll()).First() }
+        };
+        await studentService.Create(newStudent1);
+        await studentService.Create(newStudent2);
+        await studentService.Create(newStudent3);
     }
 }
