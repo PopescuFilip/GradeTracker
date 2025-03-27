@@ -20,7 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddScoped<IUserService, MockUserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDistributedMemoryCache();
 
