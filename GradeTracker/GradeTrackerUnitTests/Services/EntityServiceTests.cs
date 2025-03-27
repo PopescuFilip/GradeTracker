@@ -2,7 +2,6 @@
 using GradeTrackerWebAPI.Models;
 using GradeTrackerWebAPI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GradeTrackerUnitTests.Services
 {
