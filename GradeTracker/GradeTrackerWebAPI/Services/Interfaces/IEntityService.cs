@@ -4,7 +4,7 @@ namespace GradeTrackerWebAPI.Services.Interfaces
 {
     public interface IEntityService<T> where T : Entity
     {
-        Task<List<T>> GetAll();
+        Task<List<T>> GetAll(bool includeAllProperties = false);
 
         Task<T?> Get(int id);
 
