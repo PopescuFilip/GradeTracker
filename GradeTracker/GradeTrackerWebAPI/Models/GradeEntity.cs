@@ -10,8 +10,6 @@ public class GradeEntity : Entity
     [Range(0, 10, ErrorMessage = "Grade must be between 0 and 10.")]
     public int Grade { get; set; }
 
-    public bool IsGraded { get; set; }
-
     [ForeignKey("Student")]
     public int StudentId { get; set; }
 
