@@ -1,9 +1,8 @@
 ﻿using GradeTrackerWebAPI.Data;
 using GradeTrackerWebAPI.Models;
+using GradeTrackerWebAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-
 
 namespace GradeTrackerUnitTests.Services
 {
@@ -24,16 +23,15 @@ namespace GradeTrackerUnitTests.Services
         public void Cleanup()
         {
             using var context = new GradeTrackerContext(_dbContextOptions);
-            context.Database.EnsureDeleted(); // Delete the in-memory database after each test
+            context.Database.EnsureDeleted();
         }
 
         [TestMethod]
         public async Task AddUser_ShouldPersistUser()
         {
-            // Arrange
             using var context = new GradeTrackerContext(_dbContextOptions);
             var userService = new EntityService<UserEntity>(context);
-            UserEntity user = new UserEntity
+            var user = new UserEntity
             {
                 Username = "Cosbos",
                 Password = "123//",
