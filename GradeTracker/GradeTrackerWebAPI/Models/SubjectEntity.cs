@@ -5,10 +5,8 @@ using System.Text.Json.Serialization;
 namespace GradeTrackerWebAPI.Models
 {
     [Table("Subjects")]
-    public class SubjectEntity
+    public class SubjectEntity : Entity
     {
-        public int Id { get; set; }
-
         [Required, MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 

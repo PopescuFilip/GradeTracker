@@ -4,10 +4,8 @@ using System.Text.Json.Serialization;
 namespace GradeTrackerWebAPI.Models
 {
     [Table("Classes")]
-    public class ClassEntity
+    public class ClassEntity : Entity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         [JsonIgnore]

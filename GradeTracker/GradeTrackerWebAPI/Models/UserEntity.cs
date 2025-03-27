@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace GradeTrackerWebAPI.Models
 {
     [Table("Users")]
-    public class UserEntity
+    public class UserEntity : Entity
     {
-        public int Id { get; set; }
-
         [Required, MaxLength(50)]
         public string Username { get; set; } = string.Empty;
         [Required, MaxLength(50)]

@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using GradeTrackerWebAPI.Data;
 using GradeTrackerWebAPI.Services.Interfaces;
+using GradeTrackerWebAPI.Models;
 
-public class EntityService<T> : IEntityService<T> where T : class
+namespace GradeTrackerWebAPI.Services;
+
+public class EntityService<T>(GradeTrackerContext context) : IEntityService<T> where T : Entity
 {
-    private readonly GradeTrackerContext _context;
-
-    public EntityService(GradeTrackerContext context)
-    {
-        _context = context;
-    }
+    private readonly GradeTrackerContext _context = context;
 
     public async Task<List<T>> GetAll()
     {

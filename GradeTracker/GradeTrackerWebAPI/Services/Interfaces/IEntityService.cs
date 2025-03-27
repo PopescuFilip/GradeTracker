@@ -1,6 +1,8 @@
-﻿namespace GradeTrackerWebAPI.Services.Interfaces
+﻿using GradeTrackerWebAPI.Models;
+
+namespace GradeTrackerWebAPI.Services.Interfaces
 {
-    public interface IEntityService<T>
+    public interface IEntityService<T> where T : Entity
     {
         Task<List<T>> GetAll();
 
