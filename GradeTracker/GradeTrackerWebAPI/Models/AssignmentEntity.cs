@@ -5,26 +5,20 @@ using System.Text.Json.Serialization;
 namespace GradeTrackerWebAPI.Models
 {
     [Table("Assignments")]
-    public class AssignmentEntity
+    public class AssignmentEntity : Entity
     {
-        public int Id { get; set; }
-        [Range(0, 10, ErrorMessage = "Grade must be between 0 and 10.")]
-        public int Grade { get; set; }
         [Required, MaxLength(50)]
         public string Title { get; set; } = string.Empty;
         [Required, MaxLength(1000)]
         public string Description { get; set; } = string.Empty;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Auto-set on creation
-        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-
-        public bool IsGraded { get; set; }
-
-        // Navigation properties
+        [ForeignKey("Subject")]
+        public int SubjectId { get; set; }
 
         [JsonIgnore]
         public SubjectEntity Subject { get; set; } = null!;
-        [ForeignKey("Subjects")]
-        public int SubjectId { get; set; }
+
+        [JsonIgnore]
+        public ICollection<GradeEntity> Grades { get; set; } = [];
     }
 }

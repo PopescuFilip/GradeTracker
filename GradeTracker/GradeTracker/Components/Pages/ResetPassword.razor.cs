@@ -21,6 +21,7 @@ namespace GradeTracker.Components.Pages
             InvalidUsername = false;
             if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
                 return;
+
             var succesfullReset = await UserService.ResetPassword(Username, Password);
 
             if (!succesfullReset)

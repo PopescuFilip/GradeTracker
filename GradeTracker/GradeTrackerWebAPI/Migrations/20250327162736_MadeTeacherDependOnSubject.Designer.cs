@@ -4,6 +4,7 @@ using GradeTrackerWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GradeTrackerWebAPI.Migrations
 {
     [DbContext(typeof(GradeTrackerContext))]
-    partial class GradeTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20250327162736_MadeTeacherDependOnSubject")]
+    partial class MadeTeacherDependOnSubject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace GradeTrackerWebAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ClassEntitySubjectEntity", b =>
+                {
+                    b.Property<int>("ClassesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClassesId", "SubjectsId");
+
+                    b.HasIndex("SubjectsId");
+
+                    b.ToTable("ClassEntitySubjectEntity");
+                });
 
             modelBuilder.Entity("GradeTrackerWebAPI.Models.AssignmentEntity", b =>
                 {
@@ -30,10 +48,20 @@ namespace GradeTrackerWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsGraded")
+                        .HasColumnType("bit");
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -50,7 +78,7 @@ namespace GradeTrackerWebAPI.Migrations
                     b.ToTable("Assignments");
                 });
 
-            modelBuilder.Entity("GradeTrackerWebAPI.Models.GradeEntity", b =>
+            modelBuilder.Entity("GradeTrackerWebAPI.Models.ClassEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,26 +86,13 @@ namespace GradeTrackerWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AssignmentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignmentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Grades");
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("GradeTrackerWebAPI.Models.SubjectEntity", b =>
@@ -133,24 +148,14 @@ namespace GradeTrackerWebAPI.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("StudentEntitySubjectEntity", b =>
-                {
-                    b.Property<int>("StudentsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("StudentsId", "SubjectsId");
-
-                    b.HasIndex("SubjectsId");
-
-                    b.ToTable("StudentEntitySubjectEntity");
-                });
-
             modelBuilder.Entity("GradeTrackerWebAPI.Models.StudentEntity", b =>
                 {
                     b.HasBaseType("GradeTrackerWebAPI.Models.UserEntity");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("ClassId");
 
                     b.ToTable("Students");
                 });
@@ -172,6 +177,21 @@ namespace GradeTrackerWebAPI.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("ClassEntitySubjectEntity", b =>
+                {
+                    b.HasOne("GradeTrackerWebAPI.Models.ClassEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ClassesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GradeTrackerWebAPI.Models.SubjectEntity", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("GradeTrackerWebAPI.Models.AssignmentEntity", b =>
                 {
                     b.HasOne("GradeTrackerWebAPI.Models.SubjectEntity", "Subject")
@@ -183,47 +203,21 @@ namespace GradeTrackerWebAPI.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("GradeTrackerWebAPI.Models.GradeEntity", b =>
+            modelBuilder.Entity("GradeTrackerWebAPI.Models.StudentEntity", b =>
                 {
-                    b.HasOne("GradeTrackerWebAPI.Models.AssignmentEntity", "Assignment")
-                        .WithMany("Grades")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GradeTrackerWebAPI.Models.StudentEntity", "Student")
-                        .WithMany("Grades")
-                        .HasForeignKey("StudentId")
+                    b.HasOne("GradeTrackerWebAPI.Models.ClassEntity", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Assignment");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("StudentEntitySubjectEntity", b =>
-                {
-                    b.HasOne("GradeTrackerWebAPI.Models.StudentEntity", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GradeTrackerWebAPI.Models.SubjectEntity", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GradeTrackerWebAPI.Models.StudentEntity", b =>
-                {
                     b.HasOne("GradeTrackerWebAPI.Models.UserEntity", null)
                         .WithOne()
                         .HasForeignKey("GradeTrackerWebAPI.Models.StudentEntity", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("GradeTrackerWebAPI.Models.TeacherEntity", b =>
@@ -243,9 +237,9 @@ namespace GradeTrackerWebAPI.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("GradeTrackerWebAPI.Models.AssignmentEntity", b =>
+            modelBuilder.Entity("GradeTrackerWebAPI.Models.ClassEntity", b =>
                 {
-                    b.Navigation("Grades");
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("GradeTrackerWebAPI.Models.SubjectEntity", b =>
@@ -254,11 +248,6 @@ namespace GradeTrackerWebAPI.Migrations
 
                     b.Navigation("Teacher")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GradeTrackerWebAPI.Models.StudentEntity", b =>
-                {
-                    b.Navigation("Grades");
                 });
 #pragma warning restore 612, 618
         }

@@ -30,7 +30,15 @@ public partial class Login
         var username = Model.Username;
         var password = Model.Password;
 
-        var userType = await UserService.Login(username, password);
+        var user = await UserService.Login(username, password);
+
+        if (user == null)
+        {
+            InvalidUsernameOrPassword = true;
+            return;
+        }
+
+        var userType = await UserService.GetUserType(user.Id);
 
         if (userType == UserType.None)
         {

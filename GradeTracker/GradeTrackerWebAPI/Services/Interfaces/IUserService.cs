@@ -1,4 +1,5 @@
-﻿using GradeTrackerWebAPI.Models;
+﻿using GradeTrackerWebAPI.Enums;
+using GradeTrackerWebAPI.Models;
 
 namespace GradeTrackerWebAPI.Services.Interfaces
 {
@@ -6,6 +7,8 @@ namespace GradeTrackerWebAPI.Services.Interfaces
     {
         Task<UserEntity?> Login(string username, string password);
 
-        Task<bool> ChangePassword(int id, string oldPassword, string newPassword);
+        Task<bool> ResetPassword(string username, string newPassword);
+
+        Task<UserType> GetUserType(int id);
     }
 }

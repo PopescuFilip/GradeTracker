@@ -1,26 +1,21 @@
 ﻿using GradeTrackerWebAPI.Data;
+using GradeTrackerWebAPI.Enums;
 using GradeTrackerWebAPI.Models;
 using GradeTrackerWebAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace GradeTrackerWebAPI.Services
 {
-    public class UserService : IUserService
+    public class UserService(GradeTrackerContext context) : IUserService
     {
-        private readonly GradeTrackerContext _context;
+        private readonly GradeTrackerContext _context = context;
 
-        public UserService(GradeTrackerContext context)
+        public async Task<bool> ResetPassword(string username, string newPassword)
         {
-            _context = context;
-        }
+            var foundUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
 
-        public async Task<bool> ChangePassword(int id, string oldPassword, string newPassword)
-        {
-            var foundUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-            if (foundUser == null) return false;
-
-            if (foundUser.Password != oldPassword) return false;
+            if (foundUser == null)
+                return false;
 
             foundUser.Password = newPassword;
             _context.Users.Update(foundUser);
@@ -29,9 +24,20 @@ namespace GradeTrackerWebAPI.Services
             return true;
         }
 
-        public async Task<UserEntity?> Login(string username, string password)
+        public async Task<UserEntity?> Login(string username, string password) =>
+            await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+
+        public async Task<UserType> GetUserType(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            var student = await _context.Students.FindAsync(id);
+            if (student != null)
+                return UserType.Student;
+
+            var teacher = await _context.Teachers.FindAsync(id);
+            if (teacher != null)
+                return UserType.Teacher;
+
+            return UserType.None;
         }
     }
 }
