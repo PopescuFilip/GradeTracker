@@ -67,7 +67,7 @@ namespace GradeTrackerUnitTests.Services
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
 
-            await userService.ChangePassword(1, "123//", "newPass");
+            await userService.ResetPassword("Cosbos", "newPass");
 
             var updatedUser = await context.Users.FirstOrDefaultAsync(u => u.Id == 1);
 
@@ -75,6 +75,4 @@ namespace GradeTrackerUnitTests.Services
             Assert.IsTrue(updatedUser.Password == "newPass");
         }
     }
-
-
 }
