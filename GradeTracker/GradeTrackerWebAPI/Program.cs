@@ -14,8 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IEntityService<TeacherEntity>, EntityService<TeacherEntity>>();
-builder.Services.AddScoped<IEntityService<StudentEntity>, EntityService<StudentEntity>>();
+builder.Services.AddScoped<IEntityService<AssignmentEntity>, EntityService<AssignmentEntity>>();
+builder.Services.AddScoped<IEntityService<StudentEntity>, StudentService>();
 builder.Services.AddScoped<IEntityService<SubjectEntity>, SubjectService>();
+builder.Services.AddScoped<IEntityService<GradeEntity>, GradeService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDbContext<GradeTrackerContext>(options =>

@@ -7,7 +7,7 @@ namespace GradeTrackerWebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController(IUserService userService) : ControllerBase
+public class UserController(IEntityService<UserEntity> entityService, IUserService userService) : BaseEntityController<UserEntity>(entityService)
 {
     private readonly IUserService _userService = userService;
 

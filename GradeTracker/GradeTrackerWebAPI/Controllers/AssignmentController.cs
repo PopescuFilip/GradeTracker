@@ -6,16 +6,25 @@ namespace GradeTrackerWebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AssignmentController(IEntityService<AssignmentEntity> entityService, IEntityService<StudentEntity> studentService) : BaseEntityController<AssignmentEntity>(entityService)
+public class AssignmentController(IEntityService<AssignmentEntity> entityService) : BaseEntityController<AssignmentEntity>(entityService)
 {
-    [HttpGet("get-assignments-for-student")]
-    public async Task<ActionResult<List<AssignmentEntity>>> GetAssignmentsForStudent(int studentId)
+    [HttpPost]
+    public async Task<ActionResult> Create([FromBody] CreateAssignmentRequest assignmentRequest)
     {
-        var foundStudent = await studentService.Get(studentId);
+        var newAssignment = new AssignmentEntity()
+        {
+            Title = assignmentRequest.Title,
+            Description = assignmentRequest.Description,
+            SubjectId = assignmentRequest.SubjectId
+        };
 
-        if (foundStudent == null)
-            return NotFound();
+        var success = await _entityService.Create(newAssignment);
 
-        return Ok(foundStudent);
+        if (!success)
+            return BadRequest();
+
+        return Ok();
     }
 }
+
+public record CreateAssignmentRequest(string Title, string Description, int SubjectId);

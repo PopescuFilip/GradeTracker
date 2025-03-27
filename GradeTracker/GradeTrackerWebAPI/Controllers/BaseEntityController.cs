@@ -26,17 +26,6 @@ public abstract class BaseEntityController<T>(IEntityService<T> entityService) :
         return Ok(entity);
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Create([FromBody] T model)
-    {
-        var success = await _entityService.Create(model);
-
-        if (!success)
-            return BadRequest();
-
-        return Ok();
-    }
-
     [HttpPut("{id}")]
     public async Task<ActionResult> Update(int id, [FromBody] T model)
     {
