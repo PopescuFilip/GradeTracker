@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeTrackerWebAPI.Services;
 
-public class GradeService(GradeTrackerContext context) : EntityService<GradeEntity>(context), IEntityService<GradeEntity>
+public class GradeService(GradeTrackerContext context) : EntityService<GradeEntity>(context), IGradeService
 {
     public async override Task<List<GradeEntity>> GetAll(bool includeAllProperties = false)
     {
@@ -23,4 +23,12 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .Where(x => x.Id == id)
         .IncludeAll()
         .FirstOrDefaultAsync();
+
+    public async Task<List<GradeEntity>> GetGradesForSubjectAndStudent(int subjectId, int studentId)
+        => await _context.Set<GradeEntity>()
+        .Where(g => g.StudentId == studentId)
+        .IncludeAll()
+        .Where(g => g.Assignment.SubjectId == subjectId)
+        .ToListAsync();
+
 }

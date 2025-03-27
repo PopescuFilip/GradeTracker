@@ -18,6 +18,7 @@ builder.Services.AddScoped<IEntityService<AssignmentEntity>, EntityService<Assig
 builder.Services.AddScoped<IEntityService<StudentEntity>, StudentService>();
 builder.Services.AddScoped<IEntityService<SubjectEntity>, SubjectService>();
 builder.Services.AddScoped<IEntityService<GradeEntity>, GradeService>();
+builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDbContext<GradeTrackerContext>(options =>

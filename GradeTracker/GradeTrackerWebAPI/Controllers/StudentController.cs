@@ -9,7 +9,7 @@ namespace GradeTrackerWebAPI.Controllers;
 public class StudentController(IEntityService<StudentEntity> entityService, IEntityService<SubjectEntity> subjectService) : BaseEntityController<StudentEntity>(entityService)
 {
     [HttpGet("get-students-for-subject")]
-    public async Task<ActionResult<List<StudentEntity>>> GetStudentsForClass(int subjectId)
+    public async Task<ActionResult<List<StudentEntity>>> GetStudentsForSubject(int subjectId)
     {
         var foundSubject = await subjectService.Get(subjectId);
 
