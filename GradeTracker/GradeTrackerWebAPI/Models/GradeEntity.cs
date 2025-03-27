@@ -10,6 +10,9 @@ public class GradeEntity : Entity
     [Range(0, 10, ErrorMessage = "Grade must be between 0 and 10.")]
     public int Grade { get; set; }
 
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+
     [ForeignKey("Student")]
     public int StudentId { get; set; }
 

@@ -12,9 +12,6 @@ namespace GradeTrackerWebAPI.Models
         [Required, MaxLength(1000)]
         public string Description { get; set; } = string.Empty;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-
         [ForeignKey("Subject")]
         public int SubjectId { get; set; }
 
