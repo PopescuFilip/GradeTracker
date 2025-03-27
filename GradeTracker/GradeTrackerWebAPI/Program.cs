@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IEntityService<TeacherEntity>, EntityService<TeacherEntity>>();
 builder.Services.AddScoped<IEntityService<StudentEntity>, EntityService<StudentEntity>>();
-builder.Services.AddScoped<IEntityService<ClassEntity>, EntityService<ClassEntity>>();
+builder.Services.AddScoped<IEntityService<ClassEntity>, ClassService>();
 builder.Services.AddScoped<IEntityService<SubjectEntity>, EntityService<SubjectEntity>>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -57,22 +57,33 @@ static async Task PopulateDb(IServiceScope scope)
     var subjects = await subjectService.GetAll();
     if (subjects == null || subjects.Count == 0)
     {
-        await subjectService.Create(new SubjectEntity() { Name =  "Math" });
+        var luckyClass = (await classService.GetAll()).First();
+        await subjectService.Create(new SubjectEntity() { Name = "Math", Classes = { luckyClass } });
+        await subjectService.Create(new SubjectEntity() { Name =  "English", Classes = { luckyClass } });
     }
 
     var teacherService = scope.ServiceProvider.GetRequiredService<IEntityService<TeacherEntity>>();
     var teachers = await teacherService.GetAll();
     if (teachers == null || teachers.Count == 0)
     {
-        var newTeacher = new TeacherEntity()
+        var mathTeacher = new TeacherEntity()
         {
-            FirstName = "Gerald",
+            FirstName = "MathTeacher",
             LastName = "Geraldson",
             Username = "teacher",
             Password = "pass",
-            Subject = (await subjectService.GetAll()).First()
+            Subject = (await subjectService.GetAll()).First(s => s.Name == "Math")
         };
-        await teacherService.Create(newTeacher);
+        var englishTeacher = new TeacherEntity()
+        {
+            FirstName = "EnglishTeacher",
+            LastName = "Smith",
+            Username = "smith",
+            Password = "pass",
+            Subject = (await subjectService.GetAll()).First(s => s.Name == "English")
+        };
+        await teacherService.Create(englishTeacher);
+        await teacherService.Create(mathTeacher);
     }
 
     var studentService = scope.ServiceProvider.GetRequiredService<IEntityService<StudentEntity>>();
