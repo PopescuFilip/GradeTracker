@@ -6,7 +6,7 @@ namespace GradeTrackerWebAPI.Models
     [Table("Users")]
     public class UserEntity
     {
-        public int Id { get; set; } // Primary key
+        public int Id { get; set; }
 
         [Required, MaxLength(50)]
         public string Username { get; set; } = string.Empty;

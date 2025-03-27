@@ -6,9 +6,8 @@ namespace GradeTrackerWebAPI.Models
     [Table("Students")]
     public class StudentEntity : UserEntity
     {
-        // Navigation properties
-
-        public int ClassId { get; set; } 
+        [ForeignKey("Class")]
+        public int ClassId { get; set; }
         [JsonIgnore]
         public ClassEntity Class { get; set; } = null!;
     }

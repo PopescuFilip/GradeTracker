@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeTrackerWebAPI.Data
 {
-    public class GradeTrackerContext : DbContext
+    public class GradeTrackerContext(DbContextOptions<GradeTrackerContext> options) : DbContext(options)
     {
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<ClassEntity> Classes { get; set; }
@@ -12,15 +12,8 @@ namespace GradeTrackerWebAPI.Data
         public DbSet<SubjectEntity> Subjects { get; set; }
         public DbSet<TeacherEntity> Teachers { get; set; }
 
-        public GradeTrackerContext(DbContextOptions<GradeTrackerContext> options) : base(options) { }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserEntity>().ToTable("Users");
-            modelBuilder.Entity<StudentEntity>().ToTable("Students");
-            modelBuilder.Entity<TeacherEntity>().ToTable("Teachers");
-
-
             modelBuilder.Entity<StudentEntity>()
                 .HasOne(s => s.Class)
                 .WithMany(c => c.Students)
@@ -36,7 +29,6 @@ namespace GradeTrackerWebAPI.Data
             modelBuilder.Entity<ClassEntity>()
                 .HasMany(c => c.Subjects)
                 .WithMany(s => s.Classes);
-           
 
             modelBuilder.Entity<AssignmentEntity>()
                 .HasOne(a => a.Subject)
@@ -45,14 +37,10 @@ namespace GradeTrackerWebAPI.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SubjectEntity>()
-                .HasOne(s => s.Teacher)          
-                .WithOne(t => t.Subject)         
-                .HasForeignKey<SubjectEntity>(s => s.TeacherId) 
+                .HasOne(s => s.Teacher)
+                .WithOne(t => t.Subject)
+                .HasForeignKey<TeacherEntity>(t => t.SubjectId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<SubjectEntity>()
-                .HasIndex(s => s.TeacherId)
-                .IsUnique(); 
 
             modelBuilder.Entity<TeacherEntity>()
                 .HasIndex(t => t.Id)

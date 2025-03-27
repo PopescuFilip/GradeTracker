@@ -4,6 +4,7 @@ using GradeTrackerWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GradeTrackerWebAPI.Migrations
 {
     [DbContext(typeof(GradeTrackerContext))]
-    partial class GradeTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20250324195908_AddedNameToClasses")]
+    partial class AddedNameToClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,7 +108,13 @@ namespace GradeTrackerWebAPI.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TeacherId")
+                        .IsUnique();
 
                     b.ToTable("Subjects");
                 });
@@ -140,7 +149,7 @@ namespace GradeTrackerWebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
@@ -154,24 +163,17 @@ namespace GradeTrackerWebAPI.Migrations
 
                     b.HasIndex("ClassId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("GradeTrackerWebAPI.Models.TeacherEntity", b =>
                 {
                     b.HasBaseType("GradeTrackerWebAPI.Models.UserEntity");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("SubjectId")
-                        .IsUnique()
-                        .HasFilter("[SubjectId] IS NOT NULL");
-
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("ClassEntitySubjectEntity", b =>
@@ -200,6 +202,17 @@ namespace GradeTrackerWebAPI.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("GradeTrackerWebAPI.Models.SubjectEntity", b =>
+                {
+                    b.HasOne("GradeTrackerWebAPI.Models.TeacherEntity", "Teacher")
+                        .WithOne("Subject")
+                        .HasForeignKey("GradeTrackerWebAPI.Models.SubjectEntity", "TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("GradeTrackerWebAPI.Models.StudentEntity", b =>
                 {
                     b.HasOne("GradeTrackerWebAPI.Models.ClassEntity", "Class")
@@ -224,14 +237,6 @@ namespace GradeTrackerWebAPI.Migrations
                         .HasForeignKey("GradeTrackerWebAPI.Models.TeacherEntity", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("GradeTrackerWebAPI.Models.SubjectEntity", "Subject")
-                        .WithOne("Teacher")
-                        .HasForeignKey("GradeTrackerWebAPI.Models.TeacherEntity", "SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("GradeTrackerWebAPI.Models.ClassEntity", b =>
@@ -242,8 +247,11 @@ namespace GradeTrackerWebAPI.Migrations
             modelBuilder.Entity("GradeTrackerWebAPI.Models.SubjectEntity", b =>
                 {
                     b.Navigation("Assignments");
+                });
 
-                    b.Navigation("Teacher")
+            modelBuilder.Entity("GradeTrackerWebAPI.Models.TeacherEntity", b =>
+                {
+                    b.Navigation("Subject")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

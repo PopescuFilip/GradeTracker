@@ -15,16 +15,15 @@ namespace GradeTrackerWebAPI.Models
         [Required, MaxLength(1000)]
         public string Description { get; set; } = string.Empty;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Auto-set on creation
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         public bool IsGraded { get; set; }
 
-        // Navigation properties
+        [ForeignKey("Subject")]
+        public int SubjectId { get; set; }
 
         [JsonIgnore]
         public SubjectEntity Subject { get; set; } = null!;
-        [ForeignKey("Subjects")]
-        public int SubjectId { get; set; }
     }
 }

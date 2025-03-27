@@ -8,6 +8,7 @@ namespace GradeTrackerWebAPI.Models
     {
         public int Id { get; set; }
 
+        public string Name { get; set; }
 
         [JsonIgnore]
         public ICollection<StudentEntity> Students { get; set; } = new List<StudentEntity>();
