@@ -15,7 +15,8 @@
 {
     <div class="profile-container">
         <div class="profile-card">
-            <h4>@user.FirstName @user.LastName</h4>
+            <p><strong>FirstName:</strong> @user.FirstName</p>
+            <p><strong>LastName:</strong> @user.LastName</p>
             <p><strong>Username:</strong> @user.Username</p>
             <p><strong>User ID:</strong> @user.Id</p>
         </div>
@@ -51,8 +52,9 @@ else
         width: 400px;
     }
 
-        .profile-card h4 {
-            color: #6740c2;
+        .profile-card p {
+            color: rgba(107, 84, 161);
+            font-size: 20px;
         }
 
 
