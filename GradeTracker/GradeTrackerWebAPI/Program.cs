@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IEntityService<TeacherEntity>, EntityService<TeacherEntity>>();
 builder.Services.AddScoped<IEntityService<AssignmentEntity>, EntityService<AssignmentEntity>>();
+builder.Services.AddScoped<IEntityService<UserEntity>, EntityService<UserEntity>>();
 builder.Services.AddScoped<IEntityService<StudentEntity>, StudentService>();
 builder.Services.AddScoped<IEntityService<SubjectEntity>, SubjectService>();
 builder.Services.AddScoped<IEntityService<GradeEntity>, GradeService>();
@@ -111,5 +112,69 @@ static async Task PopulateDb(IServiceScope scope)
         await studentService.Create(newStudent1);
         await studentService.Create(newStudent2);
         await studentService.Create(newStudent3);
+
+        var assignmetService = scope.ServiceProvider.GetRequiredService<IEntityService<AssignmentEntity>>();
+        var assignemt = await assignmetService.GetAll();
+        if (assignemt == null || assignemt.Count == 0)
+        {
+            var newAssignment1 = new AssignmentEntity()
+            {
+                Title = "Math Assignment 1",
+                Subject = (await subjectService.GetAll()).First(s => s.Name == "Math"),
+                Description = "Assignment 1"
+            };
+            var newAssignment2 = new AssignmentEntity()
+            {
+                Title = "Math Assignment 2",
+                Subject = (await subjectService.GetAll()).First(s => s.Name == "Math"),
+                Description = "Assignment 2"
+            };
+            var newAssignment3 = new AssignmentEntity()
+            {
+                Title = "English Assignment 1",
+                Subject = (await subjectService.GetAll()).First(s => s.Name == "English"),
+                Description = "Assignment 3"
+            };
+            var newAssignment4 = new AssignmentEntity()
+            {
+                Title = "English Assignment 2",
+                Subject = (await subjectService.GetAll()).First(s => s.Name == "English"),
+                Description = "Assignment 4"
+            };
+            await assignmetService.Create(newAssignment1);
+            await assignmetService.Create(newAssignment2);
+            await assignmetService.Create(newAssignment3);
+            await assignmetService.Create(newAssignment4);
+        }
+
+        var gradeService = scope.ServiceProvider.GetRequiredService<IEntityService<GradeEntity>>();
+        var grades = await gradeService.GetAll();
+        if (grades == null || grades.Count == 0)
+        {
+            var newGrade1 = new GradeEntity()
+            {
+                Grade = 5,
+                Student = (await studentService.GetAll()).First(s => s.FirstName == "John"),
+                Assignment = (await assignmetService.GetAll()).First(a => a.Description == "Assignment 1")
+            };
+
+            var newGrade2 = new GradeEntity()
+            {
+                Grade = 6,
+                Student = (await studentService.GetAll()).First(s => s.FirstName == "John"),
+                Assignment = (await assignmetService.GetAll()).First(a => a.Description == "Assignment 2")
+            };
+
+            var newGrade3 = new GradeEntity()
+            {
+                Grade = 7,
+                Student = (await studentService.GetAll()).First(s => s.FirstName == "John"),
+                Assignment = (await assignmetService.GetAll()).First(a => a.Description == "Assignment 3")
+            };
+            await gradeService.Create(newGrade1);
+            await gradeService.Create(newGrade2);
+            await gradeService.Create(newGrade3);
+
+        }
     }
 }

@@ -51,6 +51,35 @@ public class GradeControllerTests
         okObjectResult.Value.Should().BeEquivalentTo(grades);
     }
 
+    [TestMethod]
+    public async Task GetAllGradesForStudent_ShouldCallGetGradesForStudentCorrectArgs_WhenAccessed()
+    {
+        var studentId = 3;
+        _gradeService.GetGradesForStudent(studentId).Returns([]);
+
+        var result = await _gradeController.GetAllGradesForStudent(studentId);
+
+        await _gradeService.Received(1).GetGradesForStudent(studentId);
+        result.Result.Should().BeOfType<NotFoundResult>();
+    }
+
+    [TestMethod]
+    public async Task GetGradesForAssignmentAndStudent_ShouldCallGetGradesForAssignmentAndStudentCorrectArgs_WhenAccessed()
+    {
+        var assignmentId = 2;
+        var studentId = 3;
+        var grades = GetGrades();
+        _gradeService.GetGradesForAssignmentAndStudent(assignmentId, studentId).Returns(grades);
+
+        var result = await _gradeController.GetGradesForAssignmentAndStudent(assignmentId, studentId);
+
+        await _gradeService.Received(1).GetGradesForAssignmentAndStudent(assignmentId, studentId);
+        result.Result.Should().BeOfType<OkObjectResult>();
+        var okObjectResult = result.Result as OkObjectResult;
+        okObjectResult.Should().NotBeNull();
+        okObjectResult.Value.Should().BeEquivalentTo(grades);
+    }
+
     private static List<GradeEntity> GetGrades()
         =>
         [

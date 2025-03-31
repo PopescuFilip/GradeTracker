@@ -1,0 +1,128 @@
+﻿@page "/student/subject_grades"
+@using GradeTracker.Services.Interfaces
+@using GradeTracker.Models;
+@using System.Security.Claims
+
+@inject ISubjectService SubjectService
+@inject IGradeService GradeService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@attribute [Authorize(Roles = Roles.Student)]
+
+@if (IsLoading)
+{
+    <div class="loading-container">
+        <p>Loading grades...</p>
+    </div>
+}
+else if (SubjectAndGrades is not null && SubjectAndGrades.Any())
+{
+    <h4 class="grades-title">All Grades for subjects</h4>
+    <div class="table-container">
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Grade</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var subjectAndGrades in SubjectAndGrades)
+                {
+                    var gradesCount = subjectAndGrades.Grades.Count;
+
+                    @if (gradesCount > 0)
+                    {
+                        <tr>
+                            <td rowspan="@gradesCount" class="subject-name">@subjectAndGrades.SubjectName</td>
+                            <td class="subject-name">@subjectAndGrades.Grades[0].Grade</td>
+                            <td class="subject-name">@subjectAndGrades.Grades[0].DateCreated.ToString("yyyy-MM-dd")</td>
+                        </tr>
+
+                        @for (int i = 1; i < gradesCount; i++)
+                        {
+                            <tr>
+                                <td class="subject-name">@subjectAndGrades.Grades[i].Grade</td>
+                                <td class="subject-name">@subjectAndGrades.Grades[i].DateCreated.ToString("yyyy-MM-dd")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="subject-name">@subjectAndGrades.SubjectName</td>
+                            <td colspan="2" class="no-grades">No grades available</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="no-data">No grades</p>
+}
+
+<style>
+    .table-container {
+        max-width: auto;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .custom-table th {
+            background-color: rgba(107, 84, 161);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .custom-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .custom-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .custom-table tr:hover {
+            background-color: #e9ecef;
+            transition: 0.3s;
+        }
+
+    .subject-name {
+        font-weight: bold;
+        background-color: #f0f0f0;
+    }
+
+    .no-grades {
+        text-align: center;
+        color: red;
+        font-style: italic;
+    }
+
+    .grades-title {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .loading-container, .no-data {
+        text-align: center;
+        font-size: 18px;
+        color: #666;
+        margin-top: 20px;
+    }
+</style>

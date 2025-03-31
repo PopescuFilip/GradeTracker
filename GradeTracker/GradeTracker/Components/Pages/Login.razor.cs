@@ -48,16 +48,16 @@ public partial class Login
 
         var role = userType == UserType.Student ? Roles.Student : Roles.Teacher;
 
-        await SignIn(username, role);
+        await SignIn(user.Id, role);
 
         Console.WriteLine("succesful login");
     }
 
-    private async Task SignIn(string username, string role)
+    private async Task SignIn(int id, string role)
     {
         var claims = new List<Claim>
         {
-            new(ClaimTypes.Name, username),
+            new(ClaimTypes.Name, id.ToString()),
             new(ClaimTypes.Role, role)
         };
 

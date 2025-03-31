@@ -24,8 +24,16 @@
 
 		<AuthorizeView Roles="@Roles.Student">
 			<div class="nav-item px-3">
-				<NavLink class="nav-link" href="student">
-					<span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Student
+				<NavLink class="nav-link" href="student/subject_grades">
+					<span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Subject Grades
+				</NavLink>
+			</div>
+		</AuthorizeView>
+
+		<AuthorizeView Roles="@Roles.Student">
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="student/assignment_grades">
+					<span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Assignement Grades
 				</NavLink>
 			</div>
 		</AuthorizeView>

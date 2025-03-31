@@ -20,4 +20,8 @@ public static class QueryExtensions
             .Include(c => c.Assignment)
             .Include(c => c.Assignment.Subject)
             .Include(c => c.Student);
+    public static IQueryable<AssignmentEntity> IncludeAll(this IQueryable<AssignmentEntity> query)
+        => query
+            .Include(c => c.Grades)
+            .Include(c => c.Subject);
 }

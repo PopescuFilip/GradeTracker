@@ -31,4 +31,18 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .Where(g => g.Assignment.SubjectId == subjectId)
         .ToListAsync();
 
+    public async Task<List<GradeEntity>> GetGradesForStudent(int studentId)
+         => await _context.Set<GradeEntity>()
+            .Where(g => g.StudentId == studentId)
+            .IncludeAll()
+            .ToListAsync();
+
+    public async Task<List<GradeEntity>> GetGradesForAssignmentAndStudent(int studentId, int assignmentId)
+       => await _context.Set<GradeEntity>()
+       .Where(g => g.StudentId == studentId)
+       .IncludeAll()
+       .Where(g => g.AssignmentId == assignmentId)
+       .ToListAsync();
+
+
 }
