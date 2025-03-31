@@ -8,12 +8,14 @@
     <main>
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+
             <AuthorizeView>
                 <NotAuthorized>
                     <a href="/login">Login</a>
                 </NotAuthorized>
                 <Authorized>
                     <a href="/logout">Logout</a>
+                    <a href="/profile" class="profile-button">Profile</a>
                 </Authorized>
             </AuthorizeView>
         </div>
@@ -29,3 +31,25 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+<style>
+    .top-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .profile-button {
+        padding: 5px 10px;
+        background-color: #6b54a1;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .profile-button:hover {
+            background-color: #563d8f;
+        }
+</style>
+
