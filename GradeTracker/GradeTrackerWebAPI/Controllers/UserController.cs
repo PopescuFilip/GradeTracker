@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GradeTrackerWebAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class UserController(IEntityService<UserEntity> entityService, IUserService userService) : BaseEntityController<UserEntity>(entityService)
 {
     private readonly IUserService _userService = userService;
