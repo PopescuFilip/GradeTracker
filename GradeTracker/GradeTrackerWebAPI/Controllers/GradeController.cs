@@ -38,6 +38,28 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
 
         return Ok(grades);
     }
+
+    [HttpGet("get-all-grades/{studentId}")]
+    public async Task<ActionResult<List<GradeEntity>>> GetAllGradesForStudent(int studentId)
+    {
+        var grades = await _gradeService.GetGradesForStudent(studentId);
+
+        if (grades == null || grades.Count == 0)
+            return NotFound();
+
+        return Ok(grades);
+    }
+
+    [HttpGet("get-grades-for-assignment/{studentId}/{assignmentId}")]
+    public async Task<ActionResult<List<GradeEntity>>> GetGradesForAssignmentAndStudent(int studentId, int assignmentId)
+    {
+        var grades = await _gradeService.GetGradesForAssignmentAndStudent(studentId, assignmentId);
+
+        if (grades == null || grades.Count == 0)
+            return NotFound();
+
+        return Ok(grades);
+    }
 }
 
 public record CreateGradeRequest(int Grade, int StudentId, int AssignmentId);
