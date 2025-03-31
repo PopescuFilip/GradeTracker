@@ -4,12 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GradeTrackerWebAPI.Controllers;
 
+/// <summary>
+/// Controller for managing grade-related actions, such as creating and retrieving grades.
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class GradeController(IGradeService gradeService) : BaseEntityController<GradeEntity>(gradeService)
 {
     private readonly IGradeService _gradeService = gradeService;
 
+    /// <summary>
+    /// Creates a new grade for a student in a specific assignment.
+    /// </summary>
+    /// <param name="createGradeRequest">The request data containing the grade, student ID, and assignment ID.</param>
+    /// <returns>A status indicating whether the grade was successfully created.</returns>
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] CreateGradeRequest createGradeRequest)
     {
@@ -28,6 +36,12 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
         return Ok();
     }
 
+    /// <summary>
+    /// Retrieves grades for a specific student in a specific subject.
+    /// </summary>
+    /// <param name="subjectId">The ID of the subject.</param>
+    /// <param name="studentId">The ID of the student.</param>
+    /// <returns>A list of grades for the specified student and subject.</returns>
     [HttpGet("get-grades-for-subject-and-student/{subjectId}/{studentId}")]
     public async Task<ActionResult<List<GradeEntity>>> GetGradesForSubjectAndStudent(int subjectId, int studentId)
     {
@@ -39,6 +53,11 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
         return Ok(grades);
     }
 
+    /// <summary>
+    /// Retrieves all grades for a specific student.
+    /// </summary>
+    /// <param name="studentId">The ID of the student.</param>
+    /// <returns>A list of all grades for the specified student.</returns>
     [HttpGet("get-all-grades/{studentId}")]
     public async Task<ActionResult<List<GradeEntity>>> GetAllGradesForStudent(int studentId)
     {
@@ -50,6 +69,12 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
         return Ok(grades);
     }
 
+    /// <summary>
+    /// Retrieves grades for a specific student in a specific assignment.
+    /// </summary>
+    /// <param name="studentId">The ID of the student.</param>
+    /// <param name="assignmentId">The ID of the assignment.</param>
+    /// <returns>A list of grades for the specified student and assignment.</returns>
     [HttpGet("get-grades-for-assignment/{studentId}/{assignmentId}")]
     public async Task<ActionResult<List<GradeEntity>>> GetGradesForAssignmentAndStudent(int studentId, int assignmentId)
     {
@@ -62,4 +87,7 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
     }
 }
 
+/// <summary>
+/// Represents the request data for creating a new grade.
+/// </summary>
 public record CreateGradeRequest(int Grade, int StudentId, int AssignmentId);
