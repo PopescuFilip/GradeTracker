@@ -6,8 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeTrackerWebAPI.Services;
 
+/// <summary>
+/// Service for managing grades.
+/// </summary>
 public class GradeService(GradeTrackerContext context) : EntityService<GradeEntity>(context), IGradeService
 {
+    /// <summary>
+    /// Retrieves all grades.
+    /// </summary>
+    /// <param name="includeAllProperties">If <c>true</c>, includes all entity properties.</param>
+    /// <returns>A list of grades.</returns>
     public async override Task<List<GradeEntity>> GetAll(bool includeAllProperties = false)
     {
         if (!includeAllProperties)
@@ -18,12 +26,23 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Retrieves a grade by ID.
+    /// </summary>
+    /// <param name="id">The grade ID.</param>
+    /// <returns>The found grade or <c>null</c> if not found.</returns>
     public override async Task<GradeEntity?> Get(int id)
         => await _context.Set<GradeEntity>()
         .Where(x => x.Id == id)
         .IncludeAll()
         .FirstOrDefaultAsync();
 
+    /// <summary>
+    /// Retrieves grades for a specific subject and student.
+    /// </summary>
+    /// <param name="subjectId">The subject ID.</param>
+    /// <param name="studentId">The student ID.</param>
+    /// <returns>A list of corresponding grades.</returns>
     public async Task<List<GradeEntity>> GetGradesForSubjectAndStudent(int subjectId, int studentId)
         => await _context.Set<GradeEntity>()
         .Where(g => g.StudentId == studentId)
@@ -31,18 +50,27 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .Where(g => g.Assignment.SubjectId == subjectId)
         .ToListAsync();
 
+    /// <summary>
+    /// Retrieves all grades for a student.
+    /// </summary>
+    /// <param name="studentId">The student ID.</param>
+    /// <returns>A list of grades for the student.</returns>
     public async Task<List<GradeEntity>> GetGradesForStudent(int studentId)
-         => await _context.Set<GradeEntity>()
-            .Where(g => g.StudentId == studentId)
-            .IncludeAll()
-            .ToListAsync();
+        => await _context.Set<GradeEntity>()
+        .Where(g => g.StudentId == studentId)
+        .IncludeAll()
+        .ToListAsync();
 
+    /// <summary>
+    /// Retrieves grades for a specific assignment and student.
+    /// </summary>
+    /// <param name="studentId">The student ID.</param>
+    /// <param name="assignmentId">The assignment ID.</param>
+    /// <returns>A list of corresponding grades.</returns>
     public async Task<List<GradeEntity>> GetGradesForAssignmentAndStudent(int studentId, int assignmentId)
-       => await _context.Set<GradeEntity>()
-       .Where(g => g.StudentId == studentId)
-       .IncludeAll()
-       .Where(g => g.AssignmentId == assignmentId)
-       .ToListAsync();
-
-
+        => await _context.Set<GradeEntity>()
+        .Where(g => g.StudentId == studentId)
+        .IncludeAll()
+        .Where(g => g.AssignmentId == assignmentId)
+        .ToListAsync();
 }

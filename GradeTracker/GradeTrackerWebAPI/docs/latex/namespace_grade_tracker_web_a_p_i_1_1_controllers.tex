@@ -1,0 +1,197 @@
+\doxysection{Grade\+Tracker\+Web\+API.\+Controllers Namespace Reference}
+\hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers}{}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_a03242cfca6fc11cc938b43081afa0187}{Assignment\+Controller}} (IEntity\+Service$<$ Assignment\+Entity $>$ entity\+Service)
+\begin{DoxyCompactList}\small\item\em Controller for managing assignment-\/related actions, such as creating assignments. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_ada7dade82acdeed39998db5e2d6efa5c}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_ada7dade82acdeed39998db5e2d6efa5c} 
+record {\bfseries Create\+Assignment\+Request} (string Title, string Description, int Subject\+Id)
+\begin{DoxyCompactList}\small\item\em Represents the request data for creating a new assignment. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_a37b27319d195e6100dc9002e57dea258}{Grade\+Controller}} (IGrade\+Service grade\+Service)
+\begin{DoxyCompactList}\small\item\em Controller for managing grade-\/related actions, such as creating and retrieving grades. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a20fd4c231ad9f14cdc5d4fa6ad5888f6}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a20fd4c231ad9f14cdc5d4fa6ad5888f6} 
+record {\bfseries Create\+Grade\+Request} (int Grade, int Student\+Id, int Assignment\+Id)
+\begin{DoxyCompactList}\small\item\em Represents the request data for creating a new grade. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_a1902d306ed6d8fb111d3d4a389c11960}{Student\+Controller}} (IEntity\+Service$<$ Student\+Entity $>$ entity\+Service, IEntity\+Service$<$ Subject\+Entity $>$ subject\+Service)
+\begin{DoxyCompactList}\small\item\em Controller for managing student-\/related actions, including retrieving students for a subject. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_aa7be486698bc4f7debc693d086e314b9}{Subject\+Controller}} (IEntity\+Service$<$ Subject\+Entity $>$ entity\+Service, IEntity\+Service$<$ Student\+Entity $>$ student\+Service)
+\begin{DoxyCompactList}\small\item\em Controller for managing subject-\/related actions, including retrieving subjects for a student. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a4067beb9c23e8507a25f98baf0668422}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a4067beb9c23e8507a25f98baf0668422} 
+class {\bfseries Teacher\+Controller} (IEntity\+Service$<$ Teacher\+Entity $>$ entity\+Service)
+\begin{DoxyCompactList}\small\item\em Controller for managing teacher-\/related actions. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_ae4ca2a6d2f8862cb071556fdd24d5e7e}{User\+Controller}} (IEntity\+Service$<$ User\+Entity $>$ entity\+Service, IUser\+Service user\+Service)
+\begin{DoxyCompactList}\small\item\em Controller for managing user-\/related actions such as login, password reset, and retrieving user type. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_ad236522b2d8bbcec6d3dc68109a6bfb3}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_ad236522b2d8bbcec6d3dc68109a6bfb3} 
+record {\bfseries Login\+Request} (string Username, string Password)
+\begin{DoxyCompactList}\small\item\em Represents the request data for user login. \end{DoxyCompactList}\item 
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_acf3b953f13b7168059d9e1f92d334ccd}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_acf3b953f13b7168059d9e1f92d334ccd} 
+record {\bfseries Reset\+Password\+Request} (string Username, string New\+Password)
+\begin{DoxyCompactList}\small\item\em Represents the request data for password reset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a03242cfca6fc11cc938b43081afa0187}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!AssignmentController@{AssignmentController}}
+\index{AssignmentController@{AssignmentController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
+\doxysubsubsection{\texorpdfstring{AssignmentController()}{AssignmentController()}}
+{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a03242cfca6fc11cc938b43081afa0187} 
+class Grade\+Tracker\+Web\+API.\+Controllers.\+Assignment\+Controller (\begin{DoxyParamCaption}\item[{IEntity\+Service$<$ Assignment\+Entity $>$}]{entity\+Service}{}\end{DoxyParamCaption})}
+
+
+
+Controller for managing assignment-\/related actions, such as creating assignments. 
+
+Creates a new assignment for a subject.
+
+
+\begin{DoxyParams}{Parameters}
+{\em assignment\+Request} & The request data containing the title, description, and subject ID for the assignment.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A status indicating whether the assignment was successfully created.
+\end{DoxyReturn}
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a37b27319d195e6100dc9002e57dea258}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!GradeController@{GradeController}}
+\index{GradeController@{GradeController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
+\doxysubsubsection{\texorpdfstring{GradeController()}{GradeController()}}
+{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a37b27319d195e6100dc9002e57dea258} 
+class Grade\+Tracker\+Web\+API.\+Controllers.\+Grade\+Controller (\begin{DoxyParamCaption}\item[{IGrade\+Service}]{grade\+Service}{}\end{DoxyParamCaption})}
+
+
+
+Controller for managing grade-\/related actions, such as creating and retrieving grades. 
+
+Creates a new grade for a student in a specific assignment.
+
+
+\begin{DoxyParams}{Parameters}
+{\em create\+Grade\+Request} & The request data containing the grade, student ID, and assignment ID.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A status indicating whether the grade was successfully created.
+\end{DoxyReturn}
+
+
+Retrieves grades for a specific student in a specific subject.
+
+
+\begin{DoxyParams}{Parameters}
+{\em subject\+Id} & The ID of the subject.\\
+\hline
+{\em student\+Id} & The ID of the student.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list of grades for the specified student and subject.
+\end{DoxyReturn}
+
+
+Retrieves all grades for a specific student.
+
+
+\begin{DoxyParams}{Parameters}
+{\em student\+Id} & The ID of the student.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list of all grades for the specified student.
+\end{DoxyReturn}
+
+
+Retrieves grades for a specific student in a specific assignment.
+
+
+\begin{DoxyParams}{Parameters}
+{\em student\+Id} & The ID of the student.\\
+\hline
+{\em assignment\+Id} & The ID of the assignment.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list of grades for the specified student and assignment.
+\end{DoxyReturn}
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a1902d306ed6d8fb111d3d4a389c11960}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!StudentController@{StudentController}}
+\index{StudentController@{StudentController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
+\doxysubsubsection{\texorpdfstring{StudentController()}{StudentController()}}
+{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a1902d306ed6d8fb111d3d4a389c11960} 
+class Grade\+Tracker\+Web\+API.\+Controllers.\+Student\+Controller (\begin{DoxyParamCaption}\item[{IEntity\+Service$<$ Student\+Entity $>$}]{entity\+Service}{, }\item[{IEntity\+Service$<$ Subject\+Entity $>$}]{subject\+Service}{}\end{DoxyParamCaption})}
+
+
+
+Controller for managing student-\/related actions, including retrieving students for a subject. 
+
+Retrieves the students enrolled in a specific subject.
+
+
+\begin{DoxyParams}{Parameters}
+{\em subject\+Id} & The ID of the subject.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list of students enrolled in the specified subject.
+\end{DoxyReturn}
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_aa7be486698bc4f7debc693d086e314b9}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!SubjectController@{SubjectController}}
+\index{SubjectController@{SubjectController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
+\doxysubsubsection{\texorpdfstring{SubjectController()}{SubjectController()}}
+{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_aa7be486698bc4f7debc693d086e314b9} 
+class Grade\+Tracker\+Web\+API.\+Controllers.\+Subject\+Controller (\begin{DoxyParamCaption}\item[{IEntity\+Service$<$ Subject\+Entity $>$}]{entity\+Service}{, }\item[{IEntity\+Service$<$ Student\+Entity $>$}]{student\+Service}{}\end{DoxyParamCaption})}
+
+
+
+Controller for managing subject-\/related actions, including retrieving subjects for a student. 
+
+Retrieves the subjects associated with a specific student.
+
+
+\begin{DoxyParams}{Parameters}
+{\em student\+Id} & The ID of the student.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list of subjects the student is enrolled in.
+\end{DoxyReturn}
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_ae4ca2a6d2f8862cb071556fdd24d5e7e}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!UserController@{UserController}}
+\index{UserController@{UserController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
+\doxysubsubsection{\texorpdfstring{UserController()}{UserController()}}
+{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_ae4ca2a6d2f8862cb071556fdd24d5e7e} 
+class Grade\+Tracker\+Web\+API.\+Controllers.\+User\+Controller (\begin{DoxyParamCaption}\item[{IEntity\+Service$<$ User\+Entity $>$}]{entity\+Service}{, }\item[{IUser\+Service}]{user\+Service}{}\end{DoxyParamCaption})}
+
+
+
+Controller for managing user-\/related actions such as login, password reset, and retrieving user type. 
+
+Authenticates a user based on the provided username and password.
+
+
+\begin{DoxyParams}{Parameters}
+{\em login\+Request} & The login credentials (username and password).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A user entity if authentication is successful; otherwise, an unauthorized status.
+\end{DoxyReturn}
+
+
+Resets the password for a user.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reset\+Password\+Request} & The request containing username and the new password.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A boolean indicating whether the password reset was successful.
+\end{DoxyReturn}
+
+
+Retrieves the type of a user based on their ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The ID of the user.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The type of the user.
+\end{DoxyReturn}

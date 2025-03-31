@@ -3,14 +3,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeTrackerWebAPI.Data
 {
+    /// <summary>
+    /// Database context for the Grade Tracker system.
+    /// </summary>
     public class GradeTrackerContext(DbContextOptions<GradeTrackerContext> options) : DbContext(options)
     {
+        /// <summary>
+        /// Gets or sets the users in the system.
+        /// </summary>
         public DbSet<UserEntity> Users { get; set; }
+
+        /// <summary>
+        /// Gets or sets the students.
+        /// </summary>
         public DbSet<StudentEntity> Students { get; set; }
+
+        /// <summary>
+        /// Gets or sets the assignments.
+        /// </summary>
         public DbSet<AssignmentEntity> Assignments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subjects.
+        /// </summary>
         public DbSet<SubjectEntity> Subjects { get; set; }
+
+        /// <summary>
+        /// Gets or sets the teachers.
+        /// </summary>
         public DbSet<TeacherEntity> Teachers { get; set; }
 
+        /// <summary>
+        /// Configures the entity relationships and constraints.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StudentEntity>()
