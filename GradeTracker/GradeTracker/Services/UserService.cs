@@ -51,6 +51,19 @@ public class UserService(IConfiguration configuration) : IUserService
 
         return UserType.None;
     }
+
+    public async Task<User?> GetUserById(int id)
+    {
+        var response = await _httpClient.GetAsync($"{_baseUrl}/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var user = await response.Content.ReadFromJsonAsync<User>();
+            return user;
+        }
+
+        return null;
+    }
 }
 
 public record LoginRequest(string Username, string Password);
