@@ -85,6 +85,23 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
 
         return Ok(grades);
     }
+
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Update(int id, [FromBody] int newGrade)
+    {
+        var foundGrade = await _entityService.Get(id);
+        if (foundGrade == null)
+            return NotFound();
+
+        foundGrade.Grade = newGrade;
+        var success = await _entityService.Update(foundGrade);
+
+        if (!success)
+            return BadRequest("Something went wrong while updating grade");
+
+        return Ok();
+    }
 }
 
 /// <summary>
