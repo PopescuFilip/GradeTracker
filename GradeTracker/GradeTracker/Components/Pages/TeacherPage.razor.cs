@@ -53,12 +53,12 @@ public partial class TeacherPage
 
     private void CloseCreateTaskModal()
     {
-        IsCreateGradeModalVisible = false;
+        HandleCreateModelVisibility(false);
     }
 
     private void ShowCreateGradeModal()
     {
-        IsCreateGradeModalVisible = true;
+        HandleCreateModelVisibility(true);
     }
 
     private async Task EditRow(GradeViewModel grade)

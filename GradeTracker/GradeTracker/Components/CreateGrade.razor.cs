@@ -12,6 +12,9 @@ public partial class CreateGrade
     [Inject]
     public IAssignmentService AssignmentService{ get; set; }
 
+    [Inject]
+    public IGradeService GradeService { get; set; }
+
     [Parameter]
     public int SubjectId { get; set; }
 
@@ -47,13 +50,27 @@ public partial class CreateGrade
 
     private async Task HandleSubmit()
     {
-        //var result = await TaskService.Post(TaskBeingCreated);
-        //if (!result)
-        //    showErrorMessage = true;
-        //else
-        //    showErrorMessage = false;
-        //TaskBeingCreated = new TaskModel();
-        //OnTaskCreated.InvokeAsync();
+        if (GradeBeingCreated.Grade < 1 || GradeBeingCreated.Grade > 10)
+        {
+            showErrorMessage = true;
+            return;
+        }
+
+        var createGradeRequest = new CreateGradeRequest(
+            GradeBeingCreated.Grade,
+            GradeBeingCreated.StudentId,
+            GradeBeingCreated.AssignmentId);
+
+        var result = await GradeService.CreateGrade(createGradeRequest);
+        if (!result)
+        {
+            showErrorMessage = true;
+            return;
+        }
+
+        showErrorMessage = false;
+        GradeBeingCreated = new GradeEntity();
+        OnGradeCreated.InvokeAsync();
     }
 
     private void CloseCreateTaskModal()

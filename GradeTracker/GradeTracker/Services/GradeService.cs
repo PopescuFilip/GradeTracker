@@ -72,5 +72,13 @@ namespace GradeTracker.Services
 
             return false;
         }
+
+        public async Task<bool> CreateGrade(CreateGradeRequest createGradeRequest)
+        {
+            var content = new StringContent(JsonSerializer.Serialize(createGradeRequest), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"{_baseUrl}", content);
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }

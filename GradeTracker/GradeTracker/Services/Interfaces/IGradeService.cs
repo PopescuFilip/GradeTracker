@@ -9,5 +9,8 @@ namespace GradeTracker.Services.Interfaces
         Task<bool> UpdateGrade(int gradeId, int newGrade);
         Task<bool> DeleteGrade(int gradeId);
         Task<bool> ExistsForStudentAndAssignment(int studentId, int assignmentId);
+        Task<bool> CreateGrade(CreateGradeRequest createGradeRequest);
     }
+
+    public record CreateGradeRequest(int Grade, int StudentId, int AssignmentId);
 }

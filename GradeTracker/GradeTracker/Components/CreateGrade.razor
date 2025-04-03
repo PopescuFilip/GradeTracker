@@ -18,7 +18,8 @@
 
 							<div class="form-group">
 								<label for="title">Grade</label>
-								<input type="text" id="grade" class="form-control" @bind="GradeBeingCreated.Grade" placeholder="Enter grade" />
+								<br />
+								<RadzenNumeric @bind-Value="@GradeBeingCreated.Grade" />
 							</div>
 
 							<div class="form-group">
@@ -33,15 +34,14 @@
 								<RadzenDropDown TValue="AssignmentViewModel" Change="@OnSelectAssignment" Data="@assignments" />
 							</div>
 
-							<button type="submit" class="btn btn-primary">Create Task</button>
+							<button style="margin-top:5px;" type="submit" class="btn btn-primary">Create Task</button>
+							@if (showErrorMessage)
+							{
+								<p class="error-message">Something went wrong</p>
+							}
 						</form>
 					</div>
 				</div>
-				@if (showErrorMessage)
-				{
-					<p class="error-message">Something went wrong</p>
-				}
-
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" @onclick="CloseCreateTaskModal">Close</button>
 				</div>
@@ -49,3 +49,19 @@
 		</div>
 	</div>
 }
+
+<style>
+	.modal-backdrop.fade.show {
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1040;
+	}
+
+	.modal {
+		z-index: 1051;
+	}
+
+	.error-message {
+		color: red;
+		font-weight: bold;
+	}
+</style>
