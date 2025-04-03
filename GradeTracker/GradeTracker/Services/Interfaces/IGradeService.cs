@@ -8,5 +8,6 @@ namespace GradeTracker.Services.Interfaces
         Task<List<GradeEntity>?> GetGradesForAssignmentAndStudent(int studentId, int assignmentId);
         Task<bool> UpdateGrade(int gradeId, int newGrade);
         Task<bool> DeleteGrade(int gradeId);
+        Task<bool> ExistsForStudentAndAssignment(int studentId, int assignmentId);
     }
 }
