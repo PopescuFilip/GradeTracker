@@ -30,5 +30,10 @@ namespace GradeTracker.Services
 
             return null;
         }
+
+        public Task<Subject> GetSubjectForTeacher(int teacherId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

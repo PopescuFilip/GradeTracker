@@ -43,5 +43,15 @@ namespace GradeTracker.Services
 
             return null;
         }
+
+        public async Task<bool> UpdateGrade(int gradeId, int newGrade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteGrade(int gradeId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
