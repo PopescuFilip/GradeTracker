@@ -68,6 +68,9 @@ public partial class TeacherPage
 
     private async Task SaveRow(GradeViewModel grade)
     {
+        if (grade.Grade < 1 || grade.Grade > 10)
+            return;
+
         await GradeService.UpdateGrade(grade.Id, grade.Grade);
         await gradeGrid.UpdateRow(grade);
     }

@@ -23,7 +23,7 @@
 				<RadzenNumeric @bind-Value="@context.Grade" />
 			</EditTemplate>
 		</RadzenDataGridColumn>
-		<RadzenDataGridColumn TItem="GradeViewModel" Property="DateCreated" Title="DateCreated">
+		<RadzenDataGridColumn TItem="GradeViewModel" Property="DateCreated" Title="Date Created">
 			<Template>
 				@context.DateCreated.ToString("dd/MM/yyyy")
 			</Template>
@@ -31,7 +31,7 @@
 				@context.DateCreated.ToString("dd/MM/yyyy")
 			</EditTemplate>
 		</RadzenDataGridColumn>
-		<RadzenDataGridColumn TItem="GradeViewModel" Property="StudentFullName" Title="StudentFullName">
+		<RadzenDataGridColumn TItem="GradeViewModel" Property="StudentFullName" Title="Student FullName">
 			<Template>
 				@context.StudentFullName
 			</Template>
