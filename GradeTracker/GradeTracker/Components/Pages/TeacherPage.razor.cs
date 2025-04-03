@@ -22,24 +22,24 @@ public partial class TeacherPage
     public ISubjectService SubjectService { get; set; }
 
     private bool IsCreateGradeModalVisible { get; set; }
+    private int SubjectId { get; set; }
 
     private List<GradeViewModel> grades;
     private RadzenDataGrid<GradeViewModel> gradeGrid;
-    private int subjectId;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var teacherId = int.Parse(authState.User.Identity.Name);
         var subject = await SubjectService.GetSubjectForTeacher(teacherId);
-        subjectId = subject.Id;
+        SubjectId = subject.Id;
 
         grades = await GradeHelper.GetGradesForSubject(subject.Id);
     }
 
     private async void HandleGradeCreated()
     {
-        grades = await GradeHelper.GetGradesForSubject(subjectId);
+        grades = await GradeHelper.GetGradesForSubject(SubjectId);
 
         await gradeGrid.Reload();
         CloseCreateTaskModal();
@@ -56,7 +56,7 @@ public partial class TeacherPage
         IsCreateGradeModalVisible = false;
     }
 
-    private void ShowCreateTaskModal()
+    private void ShowCreateGradeModal()
     {
         IsCreateGradeModalVisible = true;
     }
@@ -70,7 +70,6 @@ public partial class TeacherPage
     {
         if (grade.Grade < 1 || grade.Grade > 10)
             return;
-
         await GradeService.UpdateGrade(grade.Id, grade.Grade);
         await gradeGrid.UpdateRow(grade);
     }

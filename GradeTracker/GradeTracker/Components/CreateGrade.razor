@@ -1,0 +1,51 @@
+﻿@using Radzen
+@using Radzen.Blazor
+
+@if (IsVisible)
+{
+	<div class="modal-backdrop fade show"></div>
+
+	<div class="modal fade show" style="display:block; z-index: 1051;" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Create Task</h5>
+					<button type="button" class="btn-close" @onclick="CloseCreateTaskModal"></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-container">
+						<form @onsubmit="HandleSubmit">
+
+							<div class="form-group">
+								<label for="title">Grade</label>
+								<input type="text" id="grade" class="form-control" @bind="GradeBeingCreated.Grade" placeholder="Enter grade" />
+							</div>
+
+							<div class="form-group">
+								<label for="assignedTo">Assigned To</label>
+								<br />
+								<RadzenDropDown TValue="StudentViewModel" Change="@OnSelectStudent" Data="@students" />
+							</div>
+
+							<div class="form-group">
+								<label for="assignedTo">Assignment</label>
+								<br />
+								<RadzenDropDown TValue="AssignmentViewModel" Change="@OnSelectAssignment" Data="@assignments" />
+							</div>
+
+							<button type="submit" class="btn btn-primary">Create Task</button>
+						</form>
+					</div>
+				</div>
+				@if (showErrorMessage)
+				{
+					<p class="error-message">Something went wrong</p>
+				}
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" @onclick="CloseCreateTaskModal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}

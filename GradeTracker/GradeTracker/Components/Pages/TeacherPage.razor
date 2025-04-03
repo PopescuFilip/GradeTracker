@@ -52,3 +52,10 @@
 		</RadzenDataGridColumn>
 	</Columns>
 </RadzenDataGrid>
+
+<button class="btn btn-primary mb-3" @onclick="ShowCreateGradeModal">Add New Grade</button>
+
+@if (IsCreateGradeModalVisible)
+{
+	<CreateGrade IsVisible="@IsCreateGradeModalVisible" SubjectId="@SubjectId" OnVisibilityChanged="HandleCreateModelVisibility" OnGradeCreated="HandleGradeCreated" />
+}
