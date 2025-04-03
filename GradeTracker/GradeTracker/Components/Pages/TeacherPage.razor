@@ -1,8 +1,10 @@
 ﻿@page "/teacher"
 @rendermode InteractiveServer
+@attribute [StreamRendering]
 @attribute [Authorize(Roles = Roles.Teacher)]
-
 @using GradeTracker.ViewModels;
+@using Radzen
+@using Radzen.Blazor
 
 <PageTitle>Teacher page</PageTitle>
 

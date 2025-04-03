@@ -1,11 +1,9 @@
 using GradeTracker.Helpers;
-using GradeTracker.Models;
 using GradeTracker.Services.Interfaces;
 using GradeTracker.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Radzen.Blazor;
-using System.Threading.Tasks;
 
 namespace GradeTracker.Components.Pages;
 
