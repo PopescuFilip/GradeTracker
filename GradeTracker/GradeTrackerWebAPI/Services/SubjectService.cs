@@ -9,7 +9,7 @@ namespace GradeTrackerWebAPI.Services;
 /// <summary>
 /// Service for managing subjects.
 /// </summary>
-public class SubjectService(GradeTrackerContext context) : EntityService<SubjectEntity>(context), IEntityService<SubjectEntity>
+public class SubjectService(GradeTrackerContext context) : EntityService<SubjectEntity>(context), ISubjectService
 {
     /// <summary>
     /// Retrieves all subjects.
@@ -36,4 +36,10 @@ public class SubjectService(GradeTrackerContext context) : EntityService<Subject
         .Where(x => x.Id == id)
         .IncludeAll()
         .FirstOrDefaultAsync();
+
+    public async Task<SubjectEntity> GetSubjectForTeacher(int teacherId)
+        => await _context.Set<SubjectEntity>()
+        .Include(s => s.Teacher)
+        .Where(s => s.Teacher.Id == teacherId)
+        .SingleAsync();
 }

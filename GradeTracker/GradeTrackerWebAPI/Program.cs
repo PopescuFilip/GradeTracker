@@ -17,7 +17,7 @@ builder.Services.AddScoped<IEntityService<TeacherEntity>, EntityService<TeacherE
 builder.Services.AddScoped<IEntityService<AssignmentEntity>, EntityService<AssignmentEntity>>();
 builder.Services.AddScoped<IEntityService<UserEntity>, EntityService<UserEntity>>();
 builder.Services.AddScoped<IEntityService<StudentEntity>, StudentService>();
-builder.Services.AddScoped<IEntityService<SubjectEntity>, SubjectService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IEntityService<GradeEntity>, GradeService>();
 builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IUserService, UserService>();
