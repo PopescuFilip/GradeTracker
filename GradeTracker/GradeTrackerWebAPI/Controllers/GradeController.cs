@@ -102,6 +102,14 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
 
         return Ok();
     }
+
+    [HttpGet("exists-for-student-and-assignment/{studentId}/{assignmentId}")]
+    public async Task<ActionResult<List<GradeEntity>>> ExistsForStudentAndAssignment(int studentId, int assignmentId)
+    {
+        var exists = await _gradeService.ExistsForStudentAndAssignment(studentId, assignmentId);
+
+        return Ok(exists);
+    }
 }
 
 /// <summary>

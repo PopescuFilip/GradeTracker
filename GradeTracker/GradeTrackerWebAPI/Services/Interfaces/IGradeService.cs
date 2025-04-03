@@ -29,4 +29,6 @@ public interface IGradeService : IEntityService<GradeEntity>
     /// <param name="assignmentId">The assignment ID.</param>
     /// <returns>A list of <see cref="GradeEntity"/> entities.</returns>
     Task<List<GradeEntity>> GetGradesForAssignmentAndStudent(int studentId, int assignmentId);
+
+    Task<bool> ExistsForStudentAndAssignment(int studentId, int assignmentId);
 }
