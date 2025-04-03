@@ -21,6 +21,9 @@ public partial class TeacherPage
     [Inject]
     public ISubjectService SubjectService { get; set; }
 
+    [Inject]
+    public IAssignmentService AssignmentService { get; set; }
+
     private bool IsCreateGradeModalVisible { get; set; }
     private int SubjectId { get; set; }
 
@@ -85,5 +88,17 @@ public partial class TeacherPage
         await GradeService.DeleteGrade(grade.Id);
 
         await gradeGrid.Reload();
+    }
+
+    private bool IsFormVisible { get; set; } = false;
+    private string Title { get; set; } = "";
+    private string Description { get; set; } = "";
+    private void ShowForm() => IsFormVisible = true;
+    private void CloseForm() => IsFormVisible = false;
+
+    private async Task SubmitAssignment()
+    {
+        await AssignmentService.CreateAssignment(new CreateAssignmentRequest(Title, Description, SubjectId));
+        CloseForm();
     }
 }

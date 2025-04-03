@@ -30,7 +30,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    await PopulateDb(scope);
+    //await PopulateDb(scope);
 }
 
 // Configure the HTTP request pipeline.
