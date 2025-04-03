@@ -1,4 +1,3 @@
-using GradeTracker.Models;
 using GradeTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Components;
 
@@ -7,10 +6,10 @@ namespace GradeTracker.Components;
 public partial class CreateGrade
 {
     [Inject]
-    public IStudentService StudentService{ get; set; }
+    public IStudentService StudentService { get; set; }
 
     [Inject]
-    public IAssignmentService AssignmentService{ get; set; }
+    public IAssignmentService AssignmentService { get; set; }
 
     [Inject]
     public IGradeService GradeService { get; set; }
@@ -41,7 +40,9 @@ public partial class CreateGrade
     private List<StudentViewModel> students;
     private List<AssignmentViewModel> assignments;
 
-    private GradeEntity GradeBeingCreated { get; set; } = new GradeEntity();
+    private List<int> SelectedStudents { get; set; } = [];
+    private int SelectedAssignment { get; set; }
+    private int GradeValue { get; set; } = 1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -50,27 +51,36 @@ public partial class CreateGrade
 
     private async Task HandleSubmit()
     {
-        if (GradeBeingCreated.Grade < 1 || GradeBeingCreated.Grade > 10)
+        if (GradeValue < 1 || GradeValue > 10 || SelectedStudents.Count == 0 || SelectedAssignment == -1)
         {
             showErrorMessage = true;
             return;
         }
 
-        var createGradeRequest = new CreateGradeRequest(
-            GradeBeingCreated.Grade,
-            GradeBeingCreated.StudentId,
-            GradeBeingCreated.AssignmentId);
-
-        var result = await GradeService.CreateGrade(createGradeRequest);
-        if (!result)
+        bool allSuccess = true;
+        foreach (var studentId in SelectedStudents)
         {
-            showErrorMessage = true;
-            return;
+            var createGradeRequest = new CreateGradeRequest(
+                GradeValue,
+                studentId,
+                SelectedAssignment
+            );
+
+            var result = await GradeService.CreateGrade(createGradeRequest);
+            if (!result)
+            {
+                allSuccess = false;
+            }
         }
 
-        showErrorMessage = false;
-        GradeBeingCreated = new GradeEntity();
-        OnGradeCreated.InvokeAsync();
+        showErrorMessage = !allSuccess;
+        if (allSuccess)
+        {
+            SelectedStudents.Clear();
+            SelectedAssignment = -1;
+            GradeValue = 1;
+            OnGradeCreated.InvokeAsync();
+        }
     }
 
     private void CloseCreateTaskModal()
@@ -93,14 +103,9 @@ public partial class CreateGrade
         StateHasChanged();
     }
 
-    private void OnSelectStudent(object student)
-    {
-        GradeBeingCreated.StudentId = ((StudentViewModel)student).Id;
-    }
-
     private async void OnSelectAssignment(object assignment)
     {
-        GradeBeingCreated.AssignmentId = ((AssignmentViewModel)assignment).Id;
+        SelectedAssignment = ((AssignmentViewModel)assignment).Id;
     }
 }
 

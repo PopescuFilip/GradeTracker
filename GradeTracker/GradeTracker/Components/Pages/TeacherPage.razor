@@ -11,7 +11,7 @@
 <h1>Teacher info</h1>
 
 <RadzenDataGrid @ref="@gradeGrid" Data="@grades" TItem="GradeViewModel" AllowFiltering="true" AllowColumnResize="true"
-				AllowAlternatingRows="false" FilterMode="FilterMode.Simple" AllowSorting="true" PageSize="5"
+				AllowAlternatingRows="false" FilterMode="FilterMode.Simple" AllowSorting="true" PageSize="6"
 				AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
 				ColumnWidth="300px">
 	<Columns>
@@ -53,14 +53,14 @@
 	</Columns>
 </RadzenDataGrid>
 
-<button style="margin-top:15px;" class="btn btn-primary mb-3" @onclick="ShowCreateGradeModal">Add New Grade</button>
+<button style="margin-top:15px;" class="btn btn-primary mb-3" @onclick="ShowCreateGradeModal">Add Grade</button>
 
 @if (IsCreateGradeModalVisible)
 {
 	<CreateGrade IsVisible="@IsCreateGradeModalVisible" SubjectId="@SubjectId" OnVisibilityChanged="HandleCreateModelVisibility" OnGradeCreated="HandleGradeCreated" />
 }
 
-<button style="margin-top:15px;margin-left:10px" class="btn btn-primary mb-3" @onclick="@ShowForm"> Create Assignment </button>
+<button style="margin-top:15px;margin-left:10px" class="btn btn-primary mb-3" @onclick="@ShowForm"> Add Assignment </button>
 
 @if (IsFormVisible)
 {

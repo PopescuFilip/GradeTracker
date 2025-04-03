@@ -9,7 +9,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Create Task</h5>
+					<h5 class="modal-title">Create Grades</h5>
 					<button type="button" class="btn-close" @onclick="CloseCreateTaskModal"></button>
 				</div>
 				<div class="modal-body">
@@ -17,24 +17,27 @@
 						<form @onsubmit="HandleSubmit">
 
 							<div class="form-group">
-								<label for="title">Grade</label>
-								<br />
-								<RadzenNumeric @bind-Value="@GradeBeingCreated.Grade" />
+								<label>Grade</label>
+								<RadzenNumeric @bind-Value="@GradeValue" Min="1" Max="10" />
 							</div>
 
 							<div class="form-group">
-								<label for="assignedTo">Assigned To</label>
-								<br />
-								<RadzenDropDown TValue="StudentViewModel" Change="@OnSelectStudent" Data="@students" />
+								<label>Assigned To (Select Multiple)</label>
+								<RadzenDropDown Data="@students" @bind-Value="@SelectedStudents"
+												Multiple="true" AllowClear="true"
+												Placeholder="Select Students"
+												ValueProperty="Id"/>
 							</div>
 
 							<div class="form-group">
-								<label for="assignedTo">Assignment</label>
-								<br />
-								<RadzenDropDown TValue="AssignmentViewModel" Change="@OnSelectAssignment" Data="@assignments" />
+								<label>Assignment</label>
+								<RadzenDropDown TValue="AssignmentViewModel"
+												Data="@assignments"
+												Change="OnSelectAssignment"
+												Placeholder="Select Assignment" />
 							</div>
 
-							<button style="margin-top:5px;" type="submit" class="btn btn-primary">Create Grade</button>
+							<button style="margin-top:5px;" type="submit" class="btn btn-primary">Create Grades</button>
 							@if (showErrorMessage)
 							{
 								<p class="error-message">Something went wrong</p>
