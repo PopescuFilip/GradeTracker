@@ -16,7 +16,7 @@ public class StudentController(IEntityService<StudentEntity> entityService, IEnt
     /// </summary>
     /// <param name="subjectId">The ID of the subject.</param>
     /// <returns>A list of students enrolled in the specified subject.</returns>
-    [HttpGet("get-students-for-subject")]
+    [HttpGet("get-students-for-subject/{subjectId}")]
     public async Task<ActionResult<List<StudentEntity>>> GetStudentsForSubject(int subjectId)
     {
         var foundSubject = await subjectService.Get(subjectId);

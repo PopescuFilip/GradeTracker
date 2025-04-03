@@ -4,5 +4,5 @@ namespace GradeTracker.Services.Interfaces;
 
 public interface IStudentService
 {
-    Task<List<User>> GetStudentsForSubject(int subbjectId);
+    Task<List<User>> GetStudentsForSubject(int subjectId);
 }
