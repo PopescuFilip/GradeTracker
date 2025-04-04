@@ -9,6 +9,7 @@ namespace GradeTracker.Components.Pages
         private List<Assignment>? Assignments;
         private bool IsLoading = true;
         private int StudentId;
+        private bool SortDescending = true;
         protected override async Task OnInitializedAsync()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -36,12 +37,34 @@ namespace GradeTracker.Components.Pages
                         AssignmentAndGrades.Add(new AssignmentGradesList
                         {
                             AssignmentTitle = assignment.Title,
-                            Grades = grades
+                            Grades = grades.ToList(),
                         });
                     }
                 }
-
             }
+            AssignmentAndGrades = AssignmentAndGrades
+                    .OrderByDescending(x => x.Grades[0].DateCreated)
+                    .ToList();
+
+        }
+        private async Task ToggleSortOrder()
+        {
+            SortDescending = !SortDescending;
+
+            if (SortDescending)
+            {
+                AssignmentAndGrades = AssignmentAndGrades
+                    .OrderByDescending(x => x.Grades[0].DateCreated)
+                    .ToList();
+            }
+            else
+            {
+                AssignmentAndGrades = AssignmentAndGrades
+                    .OrderBy(x => x.Grades[0].DateCreated)
+                    .ToList();
+            }
+
+            StateHasChanged();
         }
     }
 }

@@ -6,6 +6,7 @@
 @inject ISubjectService SubjectService
 @inject IGradeService GradeService
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
 
 @attribute [Authorize(Roles = Roles.Student)]
 
@@ -18,7 +19,9 @@
 else if (SubjectAndGrades is not null && SubjectAndGrades.Any())
 {
     <h4 class="grades-title">All Grades for subjects</h4>
-   
+    <button class="sort-button" @onclick="ToggleSortOrder">
+        Sort by Date (@(SortDescending ? "Newest First" : "Oldest First"))
+    </button>
 
     <div class="table-container">
         <table class="table custom-table">
@@ -130,4 +133,20 @@ else
         color: #666;
         margin-top: 20px;
     }
+
+    .sort-button {
+        padding: 8px 16px;
+        background-color: #6b54a1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+        .sort-button:hover {
+            background-color: #56408c;
+        }
+
 </style>
