@@ -9,8 +9,10 @@ namespace GradeTrackerWebAPI.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class SubjectController(IEntityService<SubjectEntity> entityService, IEntityService<StudentEntity> studentService) : BaseEntityController<SubjectEntity>(entityService)
+public class SubjectController(ISubjectService entityService, IEntityService<StudentEntity> studentService) : BaseEntityController<SubjectEntity>(entityService)
 {
+    private readonly ISubjectService _subjectService = entityService;
+
     /// <summary>
     /// Retrieves the subjects associated with a specific student.
     /// </summary>
@@ -25,5 +27,13 @@ public class SubjectController(IEntityService<SubjectEntity> entityService, IEnt
             return NotFound();
 
         return Ok(foundStudent.Subjects);
+    }
+
+    [HttpGet("get-subject-for-teacher{teacherId}")]
+    public async Task<ActionResult<List<SubjectEntity>>> GetSubjectForTeacher(int teacherId)
+    {
+        var subject = await _subjectService.GetSubjectForTeacher(teacherId);
+
+        return Ok(subject);
     }
 }

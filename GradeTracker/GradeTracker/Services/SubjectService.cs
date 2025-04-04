@@ -30,5 +30,17 @@ namespace GradeTracker.Services
 
             return null;
         }
+
+        public async Task<Subject> GetSubjectForTeacher(int teacherId)
+        {
+            var response = await _httpClient.GetAsync($"{_baseUrl}/get-subject-for-teacher{teacherId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<Subject>();
+            }
+
+            return null;
+        }
     }
 }

@@ -1,7 +1,121 @@
 ﻿@page "/teacher"
 @rendermode InteractiveServer
+@attribute [StreamRendering]
 @attribute [Authorize(Roles = Roles.Teacher)]
+@using GradeTracker.ViewModels;
+@using Radzen
+@using Radzen.Blazor
 
 <PageTitle>Teacher page</PageTitle>
 
 <h1>Teacher info</h1>
+
+<RadzenDataGrid @ref="@gradeGrid" Data="@grades" TItem="GradeViewModel" AllowFiltering="true" AllowColumnResize="true"
+				AllowAlternatingRows="false" FilterMode="FilterMode.Simple" AllowSorting="true" PageSize="6"
+				AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+				ColumnWidth="300px">
+	<Columns>
+		<RadzenDataGridColumn TItem="GradeViewModel" Property="Grade" Title="Grade">
+			<Template>
+				@context.Grade
+			</Template>
+			<EditTemplate>
+				<RadzenNumeric @bind-Value="@context.Grade" />
+			</EditTemplate>
+		</RadzenDataGridColumn>
+		<RadzenDataGridColumn TItem="GradeViewModel" Property="DateCreated" Title="Date Created">
+			<Template>
+				@context.DateCreated.ToString("dd/MM/yyyy")
+			</Template>
+			<EditTemplate>
+				@context.DateCreated.ToString("dd/MM/yyyy")
+			</EditTemplate>
+		</RadzenDataGridColumn>
+		<RadzenDataGridColumn TItem="GradeViewModel" Property="StudentFullName" Title="Student FullName">
+			<Template>
+				@context.StudentFullName
+			</Template>
+			<EditTemplate>
+				@context.StudentFullName
+			</EditTemplate>
+		</RadzenDataGridColumn>
+		<RadzenDataGridColumn Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Frozen="true" FrozenPosition="FrozenColumnPosition.Right">
+			<Template>
+				<RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@(args => EditRow(context))" @onclick:stopPropagation="true" />
+				<RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Size="ButtonSize.Medium" Shade="Shade.Lighter" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(context))" @onclick:stopPropagation="true" />
+			</Template>
+			<EditTemplate>
+				<RadzenButton Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="ButtonSize.Medium" Click="@((args) => SaveRow(context))" aria-label="Save" />
+				<RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium" class="rz-my-1 rz-ms-1" Click="@((args) => CancelEdit(context))" aria-label="Cancel" />
+				<RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Size="ButtonSize.Medium" Shade="Shade.Lighter" class="rz-my-1 rz-ms-1" Click="@(args => DeleteRow(context))" aria-label="Delete" />
+			</EditTemplate>
+		</RadzenDataGridColumn>
+	</Columns>
+</RadzenDataGrid>
+
+<button style="margin-top:15px;" class="btn btn-primary mb-3" @onclick="ShowCreateGradeModal">Add Grade</button>
+
+@if (IsCreateGradeModalVisible)
+{
+	<CreateGrade IsVisible="@IsCreateGradeModalVisible" SubjectId="@SubjectId" OnVisibilityChanged="HandleCreateModelVisibility" OnGradeCreated="HandleGradeCreated" />
+}
+
+<button style="margin-top:15px;margin-left:10px" class="btn btn-primary mb-3" @onclick="@ShowForm"> Add Assignment </button>
+
+@if (IsFormVisible)
+{
+	<div class="assignment-form">
+		<h3 class="form-title">Create Assignment</h3>
+
+		<div class="form-group">
+			<label>Title</label>
+			<RadzenTextBox @bind-Value="Title" Placeholder="Enter Title" class="input-field" />
+		</div>
+
+		<div class="form-group">
+			<label>Description</label>
+			<RadzenTextArea @bind-Value="Description" Placeholder="Enter Description" class="input-field" />
+		</div>
+
+		<div class="form-actions">
+			<RadzenButton Text="OK" Click="@SubmitAssignment" ButtonStyle="ButtonStyle.Success" class="action-button" />
+			<RadzenButton Text="Cancel" Click="@CloseForm" ButtonStyle="ButtonStyle.Light" class="action-button" />
+		</div>
+	</div>
+}
+
+<style>
+	.assignment-form {
+		max-width: 400px;
+		margin: 20px auto;
+		padding: 20px;
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+		background-color: #fff;
+	}
+
+	.form-title {
+		text-align: center;
+		margin-bottom: 15px;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 15px;
+	}
+
+	.input-field {
+		width: 100%;
+	}
+
+	.form-actions {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.action-button {
+		width: 48%;
+	}
+</style>

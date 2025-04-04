@@ -37,6 +37,16 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .IncludeAll()
         .FirstOrDefaultAsync();
 
+    public override async Task<bool> Create(GradeEntity model)
+    {
+        var gradeExists = await ExistsForStudentAndAssignment(model.StudentId, model.AssignmentId);
+
+        if (gradeExists)
+            return false;
+
+        return await base.Create(model);
+    }
+
     /// <summary>
     /// Retrieves grades for a specific subject and student.
     /// </summary>
@@ -73,4 +83,9 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .IncludeAll()
         .Where(g => g.AssignmentId == assignmentId)
         .ToListAsync();
+
+    public async Task<bool> ExistsForStudentAndAssignment(int studentId, int assignmentId)
+        => await _context.Set<GradeEntity>()
+        .Where(g => g.StudentId == studentId && g.AssignmentId == assignmentId)
+        .AnyAsync();
 }

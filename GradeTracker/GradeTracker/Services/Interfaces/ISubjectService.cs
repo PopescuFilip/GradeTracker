@@ -6,5 +6,6 @@ namespace GradeTracker.Services.Interfaces
     {
         Task<List<Subject>?> GetAllSubjects();
         Task<List<Subject>?> GetSubjectsForStudent(int studentId);
+        Task<Subject> GetSubjectForTeacher(int teacherId);
     }
 }

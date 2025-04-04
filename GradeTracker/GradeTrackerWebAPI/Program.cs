@@ -18,6 +18,7 @@ builder.Services.AddScoped<IEntityService<AssignmentEntity>, EntityService<Assig
 builder.Services.AddScoped<IEntityService<UserEntity>, EntityService<UserEntity>>();
 builder.Services.AddScoped<IEntityService<StudentEntity>, StudentService>();
 builder.Services.AddScoped<IEntityService<SubjectEntity>, SubjectService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IEntityService<GradeEntity>, GradeService>();
 builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -29,7 +30,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    await PopulateDb(scope);
+    //await PopulateDb(scope);
 }
 
 // Configure the HTTP request pipeline.

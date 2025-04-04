@@ -40,26 +40,6 @@ public abstract class BaseEntityController<T>(IEntityService<T> entityService) :
     }
 
     /// <summary>
-    /// Updates an existing entity of type T.
-    /// </summary>
-    /// <param name="id">The ID of the entity to update.</param>
-    /// <param name="model">The updated entity data.</param>
-    /// <returns>A status indicating whether the update was successful.</returns>
-    [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, [FromBody] T model)
-    {
-        if (id != model.Id)
-            return BadRequest("ID mismatch");
-
-        var success = await _entityService.Update(model);
-
-        if (!success)
-            return NotFound();
-
-        return Ok();
-    }
-
-    /// <summary>
     /// Deletes an entity of type T by its ID.
     /// </summary>
     /// <param name="id">The ID of the entity to delete.</param>
