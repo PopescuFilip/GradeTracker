@@ -37,6 +37,14 @@
 				</NavLink>
 			</div>
 		</AuthorizeView>
+
+		<AuthorizeView Roles="@Roles.Student">
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="student/all_grades">
+					<span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Grades
+				</NavLink>
+			</div>
+		</AuthorizeView>
 	</nav>
 </div>
 
