@@ -35,7 +35,8 @@ public partial class SubjectGradesForStudent
                     SubjectAndGrades.Add(new SubjectGradesList
                     {
                         SubjectName = subject.Name,
-                        Grades = grades
+                        Grades = grades,
+                        AverageSubjectGrades = grades.Select(x => x.Grade).DefaultIfEmpty(0).Average()
                     });
                 }
             }

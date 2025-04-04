@@ -18,13 +18,17 @@
 else if (SubjectAndGrades is not null && SubjectAndGrades.Any())
 {
     <h4 class="grades-title">All Grades for subjects</h4>
+   
+
     <div class="table-container">
         <table class="table custom-table">
             <thead>
                 <tr>
                     <th>Subject</th>
+                    <th>Average</th>
                     <th>Grade</th>
                     <th>Date</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -36,15 +40,16 @@ else if (SubjectAndGrades is not null && SubjectAndGrades.Any())
                     {
                         <tr>
                             <td rowspan="@gradesCount" class="subject-name">@subjectAndGrades.SubjectName</td>
+                            <td rowspan="@gradesCount" class="subject-name">@subjectAndGrades.AverageSubjectGrades</td>
                             <td class="subject-name">@subjectAndGrades.Grades[0].Grade</td>
-                            <td class="subject-name">@subjectAndGrades.Grades[0].DateCreated.ToString("yyyy-MM-dd")</td>
+                            <td class="subject-name">@subjectAndGrades.Grades[0].DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
                         </tr>
 
                         @for (int i = 1; i < gradesCount; i++)
                         {
                             <tr>
                                 <td class="subject-name">@subjectAndGrades.Grades[i].Grade</td>
-                                <td class="subject-name">@subjectAndGrades.Grades[i].DateCreated.ToString("yyyy-MM-dd")</td>
+                                <td class="subject-name">@subjectAndGrades.Grades[i].DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
                             </tr>
                         }
                     }
