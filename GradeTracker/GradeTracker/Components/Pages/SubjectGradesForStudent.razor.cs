@@ -48,7 +48,7 @@ public partial class SubjectGradesForStudent
 
     }
 
-    private async Task ToggleSortOrder()
+    private void ToggleSortOrder()
     {
         SortDescending = !SortDescending;
 

@@ -14,7 +14,15 @@ namespace GradeTracker.Components.Pages
         protected override async Task OnInitializedAsync()
         {
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            TeacherId = int.Parse(authState.User.Identity.Name);
+
+            if (authState.User.Identity != null && !string.IsNullOrEmpty(authState.User.Identity.Name))
+            {
+                TeacherId = int.Parse(authState.User.Identity.Name);
+            }
+            else
+            {
+                TeacherId = 0;
+            }
             await LoadGrades();
 
             IsLoading = false;
@@ -44,7 +52,7 @@ namespace GradeTracker.Components.Pages
                     .ToList();
             StateHasChanged();
         }
-        private async Task ToggleSortOrder()
+        private void ToggleSortOrder()
         {
             SortDescending = !SortDescending;
 

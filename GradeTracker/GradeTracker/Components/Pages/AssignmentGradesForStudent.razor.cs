@@ -47,7 +47,7 @@ namespace GradeTracker.Components.Pages
                     .ToList();
 
         }
-        private async Task ToggleSortOrder()
+        private void ToggleSortOrder()
         {
             SortDescending = !SortDescending;
 
