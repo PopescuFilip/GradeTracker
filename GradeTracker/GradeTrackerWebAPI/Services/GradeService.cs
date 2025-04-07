@@ -60,6 +60,18 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .Where(g => g.Assignment.SubjectId == subjectId)
         .ToListAsync();
 
+
+    /// <summary>
+    /// Retrieves grades history for a specific teacher.
+    /// </summary>
+    /// <param name="teacherId">The teacher ID.</param>
+    /// <returns>A list of corresponding grades.</returns>
+    public async Task<List<GradeEntity>> GetGradesHistoryForTeacher(int teacherId)
+        => await _context.Set<GradeEntity>()
+        .Where(g => g.Assignment.Subject.Teacher.Id == teacherId)
+        .IncludeAll()
+        .ToListAsync();
+
     /// <summary>
     /// Retrieves all grades for a student.
     /// </summary>
