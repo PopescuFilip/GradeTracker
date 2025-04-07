@@ -8,6 +8,7 @@ public partial class SubjectGradesForStudent
     private List<Subject> Subjects { get; set; }
     private bool IsLoading { get; set; } = true;
     private int StudentId;
+    private bool SortDescending = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,13 +36,39 @@ public partial class SubjectGradesForStudent
                     SubjectAndGrades.Add(new SubjectGradesList
                     {
                         SubjectName = subject.Name,
-                        Grades = grades,
+                        Grades = SortDescending
+                            ? grades.OrderByDescending(x => x.DateCreated).ToList()
+                            : grades.OrderBy(x => x.DateCreated).ToList(),
                         AverageSubjectGrades = grades.Select(x => x.Grade).DefaultIfEmpty(0).Average()
                     });
                 }
             }
-
         }
+        StateHasChanged();
+
+    }
+
+    private void ToggleSortOrder()
+    {
+        SortDescending = !SortDescending;
+
+        foreach (var subjectGrades in SubjectAndGrades)
+        {
+            if (SortDescending)
+            {
+                subjectGrades.Grades = subjectGrades.Grades
+                    .OrderByDescending(x => x.DateCreated)
+                    .ToList();
+            }
+            else
+            {
+                subjectGrades.Grades = subjectGrades.Grades
+                    .OrderBy(x => x.DateCreated)
+                    .ToList();
+            }
+        }
+
+        StateHasChanged();
     }
 
 }

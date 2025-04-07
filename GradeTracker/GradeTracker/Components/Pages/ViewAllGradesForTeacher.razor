@@ -1,14 +1,15 @@
-﻿@page "/student/subject_grades"
+﻿@page "/teacher/all_grades"
+
 @using GradeTracker.Services.Interfaces
 @using GradeTracker.Models;
 @using System.Security.Claims
-
-@inject ISubjectService SubjectService
-@inject IGradeService GradeService
-@inject AuthenticationStateProvider AuthenticationStateProvider
 @rendermode InteractiveServer
 
-@attribute [Authorize(Roles = Roles.Student)]
+@inject IUserService UserService
+@inject IGradeService GradeService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@attribute [Authorize(Roles = Roles.Teacher)]
 
 @if (IsLoading)
 {
@@ -16,50 +17,38 @@
         <p>Loading grades...</p>
     </div>
 }
-else if (SubjectAndGrades is not null && SubjectAndGrades.Any())
+else if (UserAndGrades is not null && UserAndGrades.Any())
 {
-    <h4 class="grades-title">All Grades for subjects</h4>
-    <button class="sort-button" @onclick="ToggleSortOrder">
-        Sort by Date (@(SortDescending ? "Newest First" : "Oldest First"))
-    </button>
-
+    <h4 class="grades-title">All Grades</h4>
     <div class="table-container">
+        <button class="sort-button" @onclick="ToggleSortOrder">Sort by Date (@(SortDescending ? "Newest First" : "Oldest First"))</button>
+
         <table class="table custom-table">
             <thead>
                 <tr>
                     <th>Subject</th>
-                    <th>Average</th>
                     <th>Grade</th>
                     <th>Date</th>
-
                 </tr>
             </thead>
             <tbody>
-                @foreach (var subjectAndGrades in SubjectAndGrades)
+                @foreach (var userAndGrade in UserAndGrades)
                 {
-                    var gradesCount = subjectAndGrades.Grades.Count;
 
-                    @if (gradesCount > 0)
+                    @if (userAndGrade.Grade != null)
                     {
                         <tr>
-                            <td rowspan="@gradesCount" class="subject-name">@subjectAndGrades.SubjectName</td>
-                            <td rowspan="@gradesCount" class="subject-name">@subjectAndGrades.AverageSubjectGrades</td>
-                            <td class="subject-name">@subjectAndGrades.Grades[0].Grade</td>
-                            <td class="subject-name">@subjectAndGrades.Grades[0].DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td class="subject-name">@userAndGrade.Student.FirstName @userAndGrade.Student.LastName</td>
+                            <td class="subject-name">@userAndGrade.Grade.Grade</td>
+                            <td class="subject-name">@userAndGrade.Grade.DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
                         </tr>
 
-                        @for (int i = 1; i < gradesCount; i++)
-                        {
-                            <tr>
-                                <td class="subject-name">@subjectAndGrades.Grades[i].Grade</td>
-                                <td class="subject-name">@subjectAndGrades.Grades[i].DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
-                            </tr>
-                        }
+
                     }
                     else
                     {
                         <tr>
-                            <td class="subject-name">@subjectAndGrades.SubjectName</td>
+       
                             <td colspan="2" class="no-grades">No grades available</td>
                         </tr>
                     }
@@ -72,6 +61,8 @@ else
 {
     <p class="no-data">No grades</p>
 }
+
+
 
 <style>
     .table-container {
@@ -148,5 +139,6 @@ else
         .sort-button:hover {
             background-color: #56408c;
         }
-
 </style>
+
+

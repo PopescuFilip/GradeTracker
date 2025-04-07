@@ -6,6 +6,7 @@
 @inject IAssignmentService AssignmentService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize(Roles = Roles.Student)]
+@rendermode InteractiveServer
 
 
 
@@ -19,6 +20,8 @@ else if (AssignmentAndGrades is not null && AssignmentAndGrades.Any())
 {
     <h4 class="grades-title">All Grades for assignments</h4>
     <div class="table-container">
+        <button class="sort-button" @onclick="ToggleSortOrder">Sort by Date (@(SortDescending ? "Newest First" : "Oldest First"))</button>
+
         <table class="table custom-table">
             <thead>
                 <tr>
@@ -37,16 +40,10 @@ else if (AssignmentAndGrades is not null && AssignmentAndGrades.Any())
                         <tr>
                             <td rowspan="@gradesCount" class="subject-name">@assignmentAndGrades.AssignmentTitle</td>
                             <td class="subject-name">@assignmentAndGrades.Grades[0].Grade</td>
-                            <td class="subject-name">@assignmentAndGrades.Grades[0].DateCreated.ToString("yyyy-MM-dd")</td>
+                            <td class="subject-name">@assignmentAndGrades.Grades[0].DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
                         </tr>
 
-                        @for (int i = 1; i < gradesCount; i++)
-                        {
-                            <tr>
-                                <td class="subject-name">@assignmentAndGrades.Grades[i].Grade</td>
-                                <td class="subject-name">@assignmentAndGrades.Grades[i].DateCreated.ToString("yyyy-MM-dd")</td>
-                            </tr>
-                        }
+
                     }
                     else
                     {
@@ -127,4 +124,19 @@ else
         color: #666;
         margin-top: 20px;
     }
+
+    .sort-button {
+        padding: 8px 16px;
+        background-color: #6b54a1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+        .sort-button:hover {
+            background-color: #56408c;
+        }
 </style>

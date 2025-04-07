@@ -22,9 +22,21 @@ namespace GradeTracker.Services
             return null;
         }
 
-        public async Task<List<GradeEntity>> GetGradesForSubjectAndStudent(int subjectId, int studentId)
+        public async Task<List<GradeEntity>?> GetGradesForSubjectAndStudent(int subjectId, int studentId)
         {
             var response = await _httpClient.GetAsync($"{_baseUrl}/get-grades-for-subject-and-student/{subjectId}/{studentId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<GradeEntity>>();
+            }
+
+            return null;
+        }
+
+        public async Task<List<GradeEntity>?> GetGradesHistoryForTeacher(int teacherId)
+        {
+            var response = await _httpClient.GetAsync($"{_baseUrl}/get-grades-history-for-teacher/{teacherId}");
 
             if (response.IsSuccessStatusCode)
             {
