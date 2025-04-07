@@ -30,7 +30,7 @@ public partial class CreateGrade
         set
         {
             if (value)
-                OnShow();
+                 OnShow();
             _isVisible = value;
         }
     }

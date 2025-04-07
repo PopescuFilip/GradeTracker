@@ -86,6 +86,17 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
         return Ok(grades);
     }
 
+    [HttpGet("get-grades-history-for-teacher/{teacherId}")]
+    public async Task<ActionResult<List<GradeEntity>>> GetGradesHistoryForTeacher(int teacherId)
+    {
+        var grades = await _gradeService.GetGradesHistoryForTeacher(teacherId);
+
+        if (grades == null || grades.Count == 0)
+            return NotFound();
+
+        return Ok(grades);
+    }
+
 
     [HttpPut("{id}")]
     public async Task<ActionResult> Update(int id, [FromBody] int newGrade)

@@ -30,5 +30,13 @@ public interface IGradeService : IEntityService<GradeEntity>
     /// <returns>A list of <see cref="GradeEntity"/> entities.</returns>
     Task<List<GradeEntity>> GetGradesForAssignmentAndStudent(int studentId, int assignmentId);
 
+
+    /// <summary>
+    /// Retrieves grades history for a specific teacher.
+    /// </summary>
+    /// <param name="teacherId">The teacher ID.</param>
+    /// <returns>A list of corresponding grades.</returns>
+    Task<List<GradeEntity>> GetGradesHistoryForTeacher(int teacherId);
+
     Task<bool> ExistsForStudentAndAssignment(int studentId, int assignmentId);
 }
