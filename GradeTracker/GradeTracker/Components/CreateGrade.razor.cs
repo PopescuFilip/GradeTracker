@@ -79,7 +79,7 @@ public partial class CreateGrade
             SelectedStudents.Clear();
             SelectedAssignment = -1;
             GradeValue = 1;
-            OnGradeCreated.InvokeAsync();
+            await OnGradeCreated.InvokeAsync();
         }
     }
 
@@ -103,7 +103,7 @@ public partial class CreateGrade
         StateHasChanged();
     }
 
-    private async void OnSelectAssignment(object assignment)
+    private void OnSelectAssignment(object assignment)
     {
         SelectedAssignment = ((AssignmentViewModel)assignment).Id;
     }
