@@ -22,6 +22,7 @@ builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IEntityService<GradeEntity>, GradeService>();
 builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddDbContext<GradeTrackerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("GradeTrackerDB")));
