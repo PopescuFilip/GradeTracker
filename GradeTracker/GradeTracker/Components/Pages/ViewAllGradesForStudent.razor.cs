@@ -6,7 +6,7 @@ namespace GradeTracker.Components.Pages
     public partial class ViewAllGradesForStudent
     {
         private List<Subject> Subjects { get; set; } = new List<Subject>();
-        private List<AllGrades> SubjectAndGrades { get; set; } = new List<AllGrades>();
+        private List<AllGradesStudent> SubjectAndGrades { get; set; } = new List<AllGradesStudent>();
         private int StudentId { get; set; }
         private bool IsLoading { get; set; } = true;
         private bool SortDescending = true;
@@ -37,11 +37,11 @@ namespace GradeTracker.Components.Pages
                     {
                         if (SubjectAndGrades == null)
                         {
-                            SubjectAndGrades = new List<AllGrades>();
+                            SubjectAndGrades = new List<AllGradesStudent>();
                         }
                         foreach (var grade in grades)
                         {
-                            SubjectAndGrades.Add(new AllGrades
+                            SubjectAndGrades.Add(new AllGradesStudent
                             {
                                 Subject = subject,
                                 Grade = grade
