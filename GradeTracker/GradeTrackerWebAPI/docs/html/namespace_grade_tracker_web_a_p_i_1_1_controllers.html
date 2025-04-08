@@ -110,16 +110,12 @@ record&#160;</td><td class="memItemRight" valign="bottom"><b>CreateAssignmentReq
 record&#160;</td><td class="memItemRight" valign="bottom"><b>CreateGradeRequest</b> (int Grade, int StudentId, int AssignmentId)</td></tr>
 <tr class="memdesc:a20fd4c231ad9f14cdc5d4fa6ad5888f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the request data for creating a new grade. <br /></td></tr>
 <tr class="separator:a20fd4c231ad9f14cdc5d4fa6ad5888f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1902d306ed6d8fb111d3d4a389c11960" id="r_a1902d306ed6d8fb111d3d4a389c11960"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1902d306ed6d8fb111d3d4a389c11960">StudentController</a> (IEntityService&lt; StudentEntity &gt; entityService, IEntityService&lt; SubjectEntity &gt; subjectService)</td></tr>
-<tr class="memdesc:a1902d306ed6d8fb111d3d4a389c11960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller for managing student-related actions, including retrieving students for a subject.  <br /></td></tr>
-<tr class="separator:a1902d306ed6d8fb111d3d4a389c11960"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7be486698bc4f7debc693d086e314b9" id="r_aa7be486698bc4f7debc693d086e314b9"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7be486698bc4f7debc693d086e314b9">SubjectController</a> (IEntityService&lt; SubjectEntity &gt; entityService, IEntityService&lt; StudentEntity &gt; studentService)</td></tr>
-<tr class="memdesc:aa7be486698bc4f7debc693d086e314b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller for managing subject-related actions, including retrieving subjects for a student.  <br /></td></tr>
-<tr class="separator:aa7be486698bc4f7debc693d086e314b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4067beb9c23e8507a25f98baf0668422" id="r_a4067beb9c23e8507a25f98baf0668422"><td class="memItemLeft" align="right" valign="top"><a id="a4067beb9c23e8507a25f98baf0668422" name="a4067beb9c23e8507a25f98baf0668422"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>TeacherController</b> (IEntityService&lt; TeacherEntity &gt; entityService)</td></tr>
-<tr class="memdesc:a4067beb9c23e8507a25f98baf0668422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller for managing teacher-related actions. <br /></td></tr>
-<tr class="separator:a4067beb9c23e8507a25f98baf0668422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5931581acc4e5760f95da7a70796a261" id="r_a5931581acc4e5760f95da7a70796a261"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5931581acc4e5760f95da7a70796a261">StudentController</a> (IStudentService studentService, IEntityService&lt; StudentEntity &gt; entityService, IEntityService&lt; SubjectEntity &gt; subjectService)</td></tr>
+<tr class="memdesc:a5931581acc4e5760f95da7a70796a261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller for managing student-related actions, including retrieving students for a subject, and adding or removing subjects from a student.  <br /></td></tr>
+<tr class="separator:a5931581acc4e5760f95da7a70796a261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b8e857388899df30e8b133c65c080b" id="r_a98b8e857388899df30e8b133c65c080b"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98b8e857388899df30e8b133c65c080b">SubjectController</a> (ISubjectService entityService, IEntityService&lt; StudentEntity &gt; studentService)</td></tr>
+<tr class="memdesc:a98b8e857388899df30e8b133c65c080b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller for managing subject-related actions, including retrieving subjects for a student.  <br /></td></tr>
+<tr class="separator:a98b8e857388899df30e8b133c65c080b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4ca2a6d2f8862cb071556fdd24d5e7e" id="r_ae4ca2a6d2f8862cb071556fdd24d5e7e"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4ca2a6d2f8862cb071556fdd24d5e7e">UserController</a> (IEntityService&lt; UserEntity &gt; entityService, IUserService userService)</td></tr>
 <tr class="memdesc:ae4ca2a6d2f8862cb071556fdd24d5e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller for managing user-related actions such as login, password reset, and retrieving user type.  <br /></td></tr>
 <tr class="separator:ae4ca2a6d2f8862cb071556fdd24d5e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,11 +206,40 @@ record&#160;</td><td class="memItemRight" valign="bottom"><b>ResetPasswordReques
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of grades for the specified student and assignment.</dd></dl>
+<p>Retrieves the list of grades assigned by the specified teacher.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">teacherId</td><td>The unique identifier of the teacher.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ActionResult&lt;T&gt; containing the list of GradeEntity instances. </dd></dl>
+<p>&lt;response code="200"&gt;Returns the list of grades assigned by the teacher.&lt;/response&gt; &lt;response code="404"&gt;If no grades are found.&lt;/response&gt;</p>
+<p>Updates the grade value for a specific grade entity.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The unique identifier of the grade to update.</td></tr>
+    <tr><td class="paramname">newGrade</td><td>The new grade value to assign.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ActionResult indicating the result of the operation. </dd></dl>
+<p>&lt;response code="200"&gt;Grade was successfully updated.&lt;/response&gt; &lt;response code="400"&gt;If the update fails.&lt;/response&gt; &lt;response code="404"&gt;If the grade was not found.&lt;/response&gt;</p>
+<p>Checks whether a grade exists for a specific student and assignment.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">studentId</td><td>The unique identifier of the student.</td></tr>
+    <tr><td class="paramname">assignmentId</td><td>The unique identifier of the assignment.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ActionResult&lt;T&gt; containing a boolean value indicating whether the grade exists. </dd></dl>
+<p>&lt;response code="200"&gt;Returns <code>true</code> if the grade exists; otherwise, <code>false</code>.&lt;/response&gt;</p>
 
 </div>
 </div>
-<a id="a1902d306ed6d8fb111d3d4a389c11960" name="a1902d306ed6d8fb111d3d4a389c11960"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1902d306ed6d8fb111d3d4a389c11960">&#9670;&#160;</a></span>StudentController()</h2>
+<a id="a5931581acc4e5760f95da7a70796a261" name="a5931581acc4e5760f95da7a70796a261"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5931581acc4e5760f95da7a70796a261">&#9670;&#160;</a></span>StudentController()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -222,6 +247,11 @@ record&#160;</td><td class="memItemRight" valign="bottom"><b>ResetPasswordReques
         <tr>
           <td class="memname">class GradeTrackerWebAPI.Controllers.StudentController </td>
           <td>(</td>
+          <td class="paramtype">IStudentService</td>          <td class="paramname"><span class="paramname"><em>studentService</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">IEntityService&lt; StudentEntity &gt;</td>          <td class="paramname"><span class="paramname"><em>entityService</em></span>, </td>
         </tr>
         <tr>
@@ -232,7 +262,7 @@ record&#160;</td><td class="memItemRight" valign="bottom"><b>ResetPasswordReques
       </table>
 </div><div class="memdoc">
 
-<p>Controller for managing student-related actions, including retrieving students for a subject. </p>
+<p>Controller for managing student-related actions, including retrieving students for a subject, and adding or removing subjects from a student. </p>
 <p>Retrieves the students enrolled in a specific subject.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -241,11 +271,29 @@ record&#160;</td><td class="memItemRight" valign="bottom"><b>ResetPasswordReques
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of students enrolled in the specified subject.</dd></dl>
+<p>Adds a subject to a student's list of subjects.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">userId</td><td>The unique identifier of the student.</td></tr>
+    <tr><td class="paramname">subjectId</td><td>The unique identifier of the subject to add.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ActionResult with status code 200 (OK) if successful, otherwise 400 (Bad Request). </dd></dl>
+<p>Removes a subject from a student's list of subjects.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">userId</td><td>The unique identifier of the student.</td></tr>
+    <tr><td class="paramname">subjectId</td><td>The unique identifier of the subject to remove.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ActionResult with status code 200 (OK) if successful, otherwise 400 (Bad Request). </dd></dl>
 
 </div>
 </div>
-<a id="aa7be486698bc4f7debc693d086e314b9" name="aa7be486698bc4f7debc693d086e314b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7be486698bc4f7debc693d086e314b9">&#9670;&#160;</a></span>SubjectController()</h2>
+<a id="a98b8e857388899df30e8b133c65c080b" name="a98b8e857388899df30e8b133c65c080b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98b8e857388899df30e8b133c65c080b">&#9670;&#160;</a></span>SubjectController()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,7 +301,7 @@ record&#160;</td><td class="memItemRight" valign="bottom"><b>ResetPasswordReques
         <tr>
           <td class="memname">class GradeTrackerWebAPI.Controllers.SubjectController </td>
           <td>(</td>
-          <td class="paramtype">IEntityService&lt; SubjectEntity &gt;</td>          <td class="paramname"><span class="paramname"><em>entityService</em></span>, </td>
+          <td class="paramtype">ISubjectService</td>          <td class="paramname"><span class="paramname"><em>entityService</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -272,6 +320,15 @@ record&#160;</td><td class="memItemRight" valign="bottom"><b>ResetPasswordReques
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of subjects the student is enrolled in.</dd></dl>
+<p>Retrieves the subject associated with the specified teacher.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">teacherId</td><td>The unique identifier of the teacher.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ActionResult&lt;T&gt; containing the subject assigned to the teacher. </dd></dl>
+<p>&lt;response code="200"&gt;Returns the subject associated with the teacher.&lt;/response&gt; &lt;response code="404"&gt;If the subject is not found.&lt;/response&gt;</p>
 
 </div>
 </div>

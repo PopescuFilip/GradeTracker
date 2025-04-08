@@ -86,6 +86,16 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
         return Ok(grades);
     }
 
+
+    /// <summary>
+    /// Retrieves the list of grades assigned by the specified teacher.
+    /// </summary>
+    /// <param name="teacherId">The unique identifier of the teacher.</param>
+    /// <returns>
+    /// An <see cref="ActionResult{T}"/> containing the list of <see cref="GradeEntity"/> instances.
+    /// </returns>
+    /// <response code="200">Returns the list of grades assigned by the teacher.</response>
+    /// <response code="404">If no grades are found.</response>
     [HttpGet("get-grades-history-for-teacher/{teacherId}")]
     public async Task<ActionResult<List<GradeEntity>>> GetGradesHistoryForTeacher(int teacherId)
     {
@@ -97,7 +107,17 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
         return Ok(grades);
     }
 
-
+    /// <summary>
+    /// Updates the grade value for a specific grade entity.
+    /// </summary>
+    /// <param name="id">The unique identifier of the grade to update.</param>
+    /// <param name="newGrade">The new grade value to assign.</param>
+    /// <returns>
+    /// An <see cref="ActionResult"/> indicating the result of the operation.
+    /// </returns>
+    /// <response code="200">Grade was successfully updated.</response>
+    /// <response code="400">If the update fails.</response>
+    /// <response code="404">If the grade was not found.</response>
     [HttpPut("{id}")]
     public async Task<ActionResult> Update(int id, [FromBody] int newGrade)
     {
@@ -114,6 +134,15 @@ public class GradeController(IGradeService gradeService) : BaseEntityController<
         return Ok();
     }
 
+    /// <summary>
+    /// Checks whether a grade exists for a specific student and assignment.
+    /// </summary>
+    /// <param name="studentId">The unique identifier of the student.</param>
+    /// <param name="assignmentId">The unique identifier of the assignment.</param>
+    /// <returns>
+    /// An <see cref="ActionResult{T}"/> containing a boolean value indicating whether the grade exists.
+    /// </returns>
+    /// <response code="200">Returns <c>true</c> if the grade exists; otherwise, <c>false</c>.</response>
     [HttpGet("exists-for-student-and-assignment/{studentId}/{assignmentId}")]
     public async Task<ActionResult<List<GradeEntity>>> ExistsForStudentAndAssignment(int studentId, int assignmentId)
     {

@@ -13,13 +13,10 @@ class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_a37b273
 \Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a20fd4c231ad9f14cdc5d4fa6ad5888f6}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a20fd4c231ad9f14cdc5d4fa6ad5888f6} 
 record {\bfseries Create\+Grade\+Request} (int Grade, int Student\+Id, int Assignment\+Id)
 \begin{DoxyCompactList}\small\item\em Represents the request data for creating a new grade. \end{DoxyCompactList}\item 
-class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_a1902d306ed6d8fb111d3d4a389c11960}{Student\+Controller}} (IEntity\+Service$<$ Student\+Entity $>$ entity\+Service, IEntity\+Service$<$ Subject\+Entity $>$ subject\+Service)
-\begin{DoxyCompactList}\small\item\em Controller for managing student-\/related actions, including retrieving students for a subject. \end{DoxyCompactList}\item 
-class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_aa7be486698bc4f7debc693d086e314b9}{Subject\+Controller}} (IEntity\+Service$<$ Subject\+Entity $>$ entity\+Service, IEntity\+Service$<$ Student\+Entity $>$ student\+Service)
+class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_a5931581acc4e5760f95da7a70796a261}{Student\+Controller}} (IStudent\+Service student\+Service, IEntity\+Service$<$ Student\+Entity $>$ entity\+Service, IEntity\+Service$<$ Subject\+Entity $>$ subject\+Service)
+\begin{DoxyCompactList}\small\item\em Controller for managing student-\/related actions, including retrieving students for a subject, and adding or removing subjects from a student. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_a98b8e857388899df30e8b133c65c080b}{Subject\+Controller}} (ISubject\+Service entity\+Service, IEntity\+Service$<$ Student\+Entity $>$ student\+Service)
 \begin{DoxyCompactList}\small\item\em Controller for managing subject-\/related actions, including retrieving subjects for a student. \end{DoxyCompactList}\item 
-\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a4067beb9c23e8507a25f98baf0668422}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a4067beb9c23e8507a25f98baf0668422} 
-class {\bfseries Teacher\+Controller} (IEntity\+Service$<$ Teacher\+Entity $>$ entity\+Service)
-\begin{DoxyCompactList}\small\item\em Controller for managing teacher-\/related actions. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{namespace_grade_tracker_web_a_p_i_1_1_controllers_ae4ca2a6d2f8862cb071556fdd24d5e7e}{User\+Controller}} (IEntity\+Service$<$ User\+Entity $>$ entity\+Service, IUser\+Service user\+Service)
 \begin{DoxyCompactList}\small\item\em Controller for managing user-\/related actions such as login, password reset, and retrieving user type. \end{DoxyCompactList}\item 
 \Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_ad236522b2d8bbcec6d3dc68109a6bfb3}\label{namespace_grade_tracker_web_a_p_i_1_1_controllers_ad236522b2d8bbcec6d3dc68109a6bfb3} 
@@ -111,15 +108,55 @@ Retrieves grades for a specific student in a specific assignment.
 \begin{DoxyReturn}{Returns}
 A list of grades for the specified student and assignment.
 \end{DoxyReturn}
-\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a1902d306ed6d8fb111d3d4a389c11960}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!StudentController@{StudentController}}
+
+
+Retrieves the list of grades assigned by the specified teacher.
+
+
+\begin{DoxyParams}{Parameters}
+{\em teacher\+Id} & The unique identifier of the teacher.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An Action\+Result$<$\+T$>$ containing the list of Grade\+Entity instances. 
+\end{DoxyReturn}
+$<$response code="{}200"{}$>$Returns the list of grades assigned by the teacher.$<$/response$>$ $<$response code="{}404"{}$>$If no grades are found.$<$/response$>$
+
+Updates the grade value for a specific grade entity.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The unique identifier of the grade to update.\\
+\hline
+{\em new\+Grade} & The new grade value to assign.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An Action\+Result indicating the result of the operation. 
+\end{DoxyReturn}
+$<$response code="{}200"{}$>$Grade was successfully updated.$<$/response$>$ $<$response code="{}400"{}$>$If the update fails.$<$/response$>$ $<$response code="{}404"{}$>$If the grade was not found.$<$/response$>$
+
+Checks whether a grade exists for a specific student and assignment.
+
+
+\begin{DoxyParams}{Parameters}
+{\em student\+Id} & The unique identifier of the student.\\
+\hline
+{\em assignment\+Id} & The unique identifier of the assignment.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An Action\+Result$<$\+T$>$ containing a boolean value indicating whether the grade exists. 
+\end{DoxyReturn}
+$<$response code="{}200"{}$>$Returns {\ttfamily true} if the grade exists; otherwise, {\ttfamily false}.$<$/response$>$\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a5931581acc4e5760f95da7a70796a261}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!StudentController@{StudentController}}
 \index{StudentController@{StudentController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
 \doxysubsubsection{\texorpdfstring{StudentController()}{StudentController()}}
-{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a1902d306ed6d8fb111d3d4a389c11960} 
-class Grade\+Tracker\+Web\+API.\+Controllers.\+Student\+Controller (\begin{DoxyParamCaption}\item[{IEntity\+Service$<$ Student\+Entity $>$}]{entity\+Service}{, }\item[{IEntity\+Service$<$ Subject\+Entity $>$}]{subject\+Service}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a5931581acc4e5760f95da7a70796a261} 
+class Grade\+Tracker\+Web\+API.\+Controllers.\+Student\+Controller (\begin{DoxyParamCaption}\item[{IStudent\+Service}]{student\+Service}{, }\item[{IEntity\+Service$<$ Student\+Entity $>$}]{entity\+Service}{, }\item[{IEntity\+Service$<$ Subject\+Entity $>$}]{subject\+Service}{}\end{DoxyParamCaption})}
 
 
 
-Controller for managing student-\/related actions, including retrieving students for a subject. 
+Controller for managing student-\/related actions, including retrieving students for a subject, and adding or removing subjects from a student. 
 
 Retrieves the students enrolled in a specific subject.
 
@@ -131,11 +168,39 @@ Retrieves the students enrolled in a specific subject.
 \begin{DoxyReturn}{Returns}
 A list of students enrolled in the specified subject.
 \end{DoxyReturn}
-\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_aa7be486698bc4f7debc693d086e314b9}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!SubjectController@{SubjectController}}
+
+
+Adds a subject to a student\textquotesingle{}s list of subjects.
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+Id} & The unique identifier of the student.\\
+\hline
+{\em subject\+Id} & The unique identifier of the subject to add.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An Action\+Result with status code 200 (OK) if successful, otherwise 400 (Bad Request). 
+\end{DoxyReturn}
+
+
+Removes a subject from a student\textquotesingle{}s list of subjects.
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+Id} & The unique identifier of the student.\\
+\hline
+{\em subject\+Id} & The unique identifier of the subject to remove.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An Action\+Result with status code 200 (OK) if successful, otherwise 400 (Bad Request). 
+\end{DoxyReturn}
+\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_a98b8e857388899df30e8b133c65c080b}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!SubjectController@{SubjectController}}
 \index{SubjectController@{SubjectController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
 \doxysubsubsection{\texorpdfstring{SubjectController()}{SubjectController()}}
-{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_aa7be486698bc4f7debc693d086e314b9} 
-class Grade\+Tracker\+Web\+API.\+Controllers.\+Subject\+Controller (\begin{DoxyParamCaption}\item[{IEntity\+Service$<$ Subject\+Entity $>$}]{entity\+Service}{, }\item[{IEntity\+Service$<$ Student\+Entity $>$}]{student\+Service}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_a98b8e857388899df30e8b133c65c080b} 
+class Grade\+Tracker\+Web\+API.\+Controllers.\+Subject\+Controller (\begin{DoxyParamCaption}\item[{ISubject\+Service}]{entity\+Service}{, }\item[{IEntity\+Service$<$ Student\+Entity $>$}]{student\+Service}{}\end{DoxyParamCaption})}
 
 
 
@@ -151,7 +216,19 @@ Retrieves the subjects associated with a specific student.
 \begin{DoxyReturn}{Returns}
 A list of subjects the student is enrolled in.
 \end{DoxyReturn}
-\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_ae4ca2a6d2f8862cb071556fdd24d5e7e}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!UserController@{UserController}}
+
+
+Retrieves the subject associated with the specified teacher.
+
+
+\begin{DoxyParams}{Parameters}
+{\em teacher\+Id} & The unique identifier of the teacher.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An Action\+Result$<$\+T$>$ containing the subject assigned to the teacher. 
+\end{DoxyReturn}
+$<$response code="{}200"{}$>$Returns the subject associated with the teacher.$<$/response$>$ $<$response code="{}404"{}$>$If the subject is not found.$<$/response$>$\Hypertarget{namespace_grade_tracker_web_a_p_i_1_1_controllers_ae4ca2a6d2f8862cb071556fdd24d5e7e}\index{GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}!UserController@{UserController}}
 \index{UserController@{UserController}!GradeTrackerWebAPI.Controllers@{GradeTrackerWebAPI.Controllers}}
 \doxysubsubsection{\texorpdfstring{UserController()}{UserController()}}
 {\footnotesize\ttfamily \label{namespace_grade_tracker_web_a_p_i_1_1_controllers_ae4ca2a6d2f8862cb071556fdd24d5e7e} 

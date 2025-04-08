@@ -38,5 +38,13 @@ public interface IGradeService : IEntityService<GradeEntity>
     /// <returns>A list of corresponding grades.</returns>
     Task<List<GradeEntity>> GetGradesHistoryForTeacher(int teacherId);
 
+    /// <summary>
+    /// Checks whether a grade already exists for the given student and assignment.
+    /// </summary>
+    /// <param name="studentId">The unique identifier of the student.</param>
+    /// <param name="assignmentId">The unique identifier of the assignment.</param>
+    /// <returns>
+    /// A task representing the asynchronous operation. The result is <c>true</c> if a grade exists; otherwise, <c>false</c>.
+    /// </returns>
     Task<bool> ExistsForStudentAndAssignment(int studentId, int assignmentId);
 }

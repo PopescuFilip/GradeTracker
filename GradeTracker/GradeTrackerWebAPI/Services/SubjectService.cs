@@ -37,6 +37,17 @@ public class SubjectService(GradeTrackerContext context) : EntityService<Subject
         .IncludeAll()
         .FirstOrDefaultAsync();
 
+    /// <summary>
+    /// Asynchronously retrieves the subject assigned to a specific teacher.
+    /// </summary>
+    /// <param name="teacherId">The unique identifier of the teacher.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task result contains 
+    /// the <see cref="SubjectEntity"/> associated with the specified teacher.
+    /// </returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if there is not exactly one subject for the given teacher (e.g., if none or multiple are found).
+    /// </exception>
     public async Task<SubjectEntity> GetSubjectForTeacher(int teacherId)
         => await _context.Set<SubjectEntity>()
         .Include(s => s.Teacher)
