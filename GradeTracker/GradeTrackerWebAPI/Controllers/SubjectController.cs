@@ -29,6 +29,15 @@ public class SubjectController(ISubjectService entityService, IEntityService<Stu
         return Ok(foundStudent.Subjects);
     }
 
+    /// <summary>
+    /// Retrieves the subject associated with the specified teacher.
+    /// </summary>
+    /// <param name="teacherId">The unique identifier of the teacher.</param>
+    /// <returns>
+    /// An <see cref="ActionResult{T}"/> containing the subject assigned to the teacher.
+    /// </returns>
+    /// <response code="200">Returns the subject associated with the teacher.</response>
+    /// <response code="404">If the subject is not found.</response>
     [HttpGet("get-subject-for-teacher{teacherId}")]
     public async Task<ActionResult<List<SubjectEntity>>> GetSubjectForTeacher(int teacherId)
     {

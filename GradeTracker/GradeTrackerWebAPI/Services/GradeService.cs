@@ -37,6 +37,15 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .IncludeAll()
         .FirstOrDefaultAsync();
 
+    /// <summary>
+    /// Asynchronously creates a new grade entry if one does not already exist for the specified student and assignment.
+    /// </summary>
+    /// <param name="model">The <see cref="GradeEntity"/> to be created.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task result is 
+    /// <c>true</c> if the grade was successfully created; otherwise, <c>false</c> 
+    /// if a grade for the given student and assignment already exists.
+    /// </returns>
     public override async Task<bool> Create(GradeEntity model)
     {
         var gradeExists = await ExistsForStudentAndAssignment(model.StudentId, model.AssignmentId);
@@ -96,6 +105,15 @@ public class GradeService(GradeTrackerContext context) : EntityService<GradeEnti
         .Where(g => g.AssignmentId == assignmentId)
         .ToListAsync();
 
+    /// <summary>
+    /// Checks asynchronously whether a grade already exists for the given student and assignment.
+    /// </summary>
+    /// <param name="studentId">The unique identifier of the student.</param>
+    /// <param name="assignmentId">The unique identifier of the assignment.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task result is 
+    /// <c>true</c> if a grade exists for the specified student and assignment; otherwise, <c>false</c>.
+    /// </returns>
     public async Task<bool> ExistsForStudentAndAssignment(int studentId, int assignmentId)
         => await _context.Set<GradeEntity>()
         .Where(g => g.StudentId == studentId && g.AssignmentId == assignmentId)
