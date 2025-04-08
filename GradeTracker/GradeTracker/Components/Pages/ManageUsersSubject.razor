@@ -1,0 +1,151 @@
+﻿@page "/teacher/manage-students"
+@using GradeTracker.Services.Interfaces
+@using GradeTracker.Models
+@using System.Security.Claims
+@rendermode InteractiveServer
+
+@inject IStudentService StudentService
+@inject ISubjectService SubjectService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@attribute [Authorize(Roles = Roles.Teacher)]
+
+@if (IsLoading)
+{
+    <div class="loading-container">
+        <p>Loading...</p>
+    </div>
+}
+else if (!HasSubject)
+{
+    <div class="warning-message">
+        <p>You are not assigned to any subject. Please contact administration.</p>
+    </div>
+}
+else
+{
+    <div class="management-container">
+        <h3 class="management-title">Manage Students in your @SubjectName class</h3>
+
+        <div class="student-management">
+            <div class="add-student-section">
+                <input type="number" class="student-input" @bind="NewStudentId" placeholder="Enter Student ID" />
+                <button class="add-button" @onclick="AddStudent">Add Student</button>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Message))
+            {
+                <div class="message @(IsError ? "error" : "success")">@Message</div>
+            }
+
+            @if (StudentsInSubject.Any())
+            {
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Username</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in StudentsInSubject)
+                        {
+                            <tr>
+                                <td>@student.FirstName @student.LastName</td>
+                                <td>@student.Username</td>
+                                <td>
+                                    <button class="remove-button"
+                                            @onclick="(() => RemoveStudent(student.Id))">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="no-students">No students enrolled in your subject</p>
+            }
+        </div>
+    </div>
+}
+
+<style>
+    .table-container {
+        max-width: auto;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .custom-table th {
+            background-color: rgba(107, 84, 161);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .custom-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .custom-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .custom-table tr:hover {
+            background-color: #e9ecef;
+            transition: 0.3s;
+        }
+
+    .subject-name {
+        font-weight: bold;
+        background-color: #f0f0f0;
+    }
+
+    .no-grades {
+        text-align: center;
+        color: red;
+        font-style: italic;
+    }
+
+    .grades-title {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .loading-container, .no-data {
+        text-align: center;
+        font-size: 18px;
+        color: #666;
+        margin-top: 20px;
+    }
+
+    .sort-button {
+        padding: 8px 16px;
+        background-color: #6b54a1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+        .sort-button:hover {
+            background-color: #56408c;
+        }
+</style>
